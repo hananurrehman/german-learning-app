@@ -38,7 +38,7 @@ export default function VocabScreen() {
 
   // Tap: if meaning is empty, pull article + meaning from AI and store it.
   async function onTap(item) {
-    if (item.meaning) return; // already have it; row already shows it
+    if (item.meaning || busy[item.de]) return; // have it, or already fetching
     setError('');
     setBusy((b) => ({ ...b, [item.de]: true }));
     try {

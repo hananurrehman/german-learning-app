@@ -3,6 +3,7 @@ import { ScrollView, View, Text, TextInput, TouchableOpacity, ActivityIndicator 
 import { useFocusEffect } from '@react-navigation/native';
 import { getVocab } from '../lib/store';
 import { makeExercises } from '../lib/ai';
+import { AppButton } from './Button';
 import { styles, colors } from './theme';
 
 export default function PracticeScreen() {
@@ -20,6 +21,7 @@ export default function PracticeScreen() {
   );
 
   async function onGenerate() {
+    if (loading) return;
     setLoading(true);
     setError('');
     setExercises(null);
@@ -48,17 +50,11 @@ export default function PracticeScreen() {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <TouchableOpacity
-        style={[styles.btn, loading && styles.btnDisabled]}
+      <AppButton
+        title={exercises ? 'Generate new quiz' : 'Generate quiz'}
         onPress={onGenerate}
-        disabled={loading}
-      >
-        <Text style={styles.btnText}>
-          {exercises ? 'Generate new quiz' : 'Generate quiz'}
-        </Text>
-      </TouchableOpacity>
-
-      {loading && <ActivityIndicator style={{ marginTop: 20 }} />}
+        loading={loading}
+      />
 
       {error ? (
         <View style={[styles.errorBox, { marginTop: 20 }]}>

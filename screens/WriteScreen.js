@@ -1,13 +1,7 @@
 import { useState } from 'react';
-import {
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import { ScrollView, Text, TextInput, View } from 'react-native';
 import { checkSentence } from '../lib/ai';
+import { AppButton } from './Button';
 import { styles, colors } from './theme';
 
 export default function WriteScreen() {
@@ -17,7 +11,7 @@ export default function WriteScreen() {
   const [result, setResult] = useState(null); // { corrected, structure, genders }
 
   async function onCheck() {
-    if (!text.trim()) return;
+    if (loading || !text.trim()) return;
     setLoading(true);
     setError('');
     setResult(null);
@@ -43,15 +37,12 @@ export default function WriteScreen() {
         multiline
       />
 
-      <TouchableOpacity
-        style={[styles.btn, { marginTop: 10 }, loading && styles.btnDisabled]}
+      <AppButton
+        title="Check"
         onPress={onCheck}
-        disabled={loading}
-      >
-        <Text style={styles.btnText}>Check</Text>
-      </TouchableOpacity>
-
-      {loading && <ActivityIndicator style={{ marginTop: 20 }} />}
+        loading={loading}
+        style={{ marginTop: 10 }}
+      />
 
       {error ? (
         <View style={[styles.errorBox, { marginTop: 20 }]}>

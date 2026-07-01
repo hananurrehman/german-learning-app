@@ -5,12 +5,12 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ActivityIndicator,
   Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { translate, translateImage } from '../lib/ai';
 import { saveWord } from '../lib/store';
+import { AppButton } from './Button';
 import { styles, colors } from './theme';
 
 const DIRS = [
@@ -21,51 +21,62 @@ const DIRS = [
 export default function TranslateScreen() {
   const [dir, setDir] = useState('de-en');
   const [text, setText] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [flight, setFlight] = useState(null); // 'text' | 'camera' | 'gallery' | null
   const [error, setError] = useState('');
   const [result, setResult] = useState(null); // { german?, translation, words }
   const [saved, setSaved] = useState({}); // de -> true
 
-  async function run(fn) {
-    setLoading(true);
+  const loading = flight !== null; // any AI action in flight
+
+  async function onTranslate() {
+    if (loading || !text.trim()) return;
+    setFlight('text');
     setError('');
     setResult(null);
     setSaved({});
     try {
-      setResult(await fn());
+      setResult(await translate(text.trim(), dir));
     } catch (e) {
       setError(e.message || String(e));
     } finally {
-      setLoading(false);
+      setFlight(null);
     }
   }
 
-  function onTranslate() {
-    if (!text.trim()) return;
-    run(() => translate(text.trim(), dir));
-  }
-
+  // Holds the in-flight state across the whole pick + API call so all buttons
+  // stay disabled (and taps are ignored) until it finishes.
   async function pickImage(fromCamera) {
-    const picker = fromCamera
-      ? ImagePicker.launchCameraAsync
-      : ImagePicker.launchImageLibraryAsync;
+    if (loading) return;
+    setFlight(fromCamera ? 'camera' : 'gallery');
+    setError('');
+    setResult(null);
+    setSaved({});
+    try {
+      const perm = fromCamera
+        ? await ImagePicker.requestCameraPermissionsAsync()
+        : await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!perm.granted) {
+        Alert.alert('Permission needed', 'Allow access to use this.');
+        return;
+      }
 
-    const perm = fromCamera
-      ? await ImagePicker.requestCameraPermissionsAsync()
-      : await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!perm.granted) {
-      Alert.alert('Permission needed', 'Allow access to use this.');
-      return;
-    }
+      const picker = fromCamera
+        ? ImagePicker.launchCameraAsync
+        : ImagePicker.launchImageLibraryAsync;
+      const res = await picker({ base64: true, quality: 0.6 });
+      if (res.canceled) return;
 
-    const res = await picker({ base64: true, quality: 0.6 });
-    if (res.canceled) return;
-    const base64 = res.assets?.[0]?.base64;
-    if (!base64) {
-      setError('Could not read image data.');
-      return;
+      const base64 = res.assets?.[0]?.base64;
+      if (!base64) {
+        setError('Could not read image data.');
+        return;
+      }
+      setResult(await translateImage(base64));
+    } catch (e) {
+      setError(e.message || String(e));
+    } finally {
+      setFlight(null);
     }
-    run(() => translateImage(base64));
   }
 
   async function onSave(w) {
@@ -116,32 +127,32 @@ export default function TranslateScreen() {
         multiline
       />
 
-      <TouchableOpacity
-        style={[styles.btn, { marginTop: 10 }, loading && styles.btnDisabled]}
+      <AppButton
+        title="Translate"
         onPress={onTranslate}
+        loading={flight === 'text'}
         disabled={loading}
-      >
-        <Text style={styles.btnText}>Translate</Text>
-      </TouchableOpacity>
+        style={{ marginTop: 10 }}
+      />
 
       <View style={[styles.row, { marginTop: 10, gap: 10 }]}>
-        <TouchableOpacity
-          style={[styles.btnOutline, { flex: 1 }, loading && styles.btnDisabled]}
+        <AppButton
+          title="📷 Camera"
+          variant="outline"
           onPress={() => pickImage(true)}
+          loading={flight === 'camera'}
           disabled={loading}
-        >
-          <Text style={styles.btnOutlineText}>📷 Camera</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.btnOutline, { flex: 1 }, loading && styles.btnDisabled]}
+          style={{ flex: 1 }}
+        />
+        <AppButton
+          title="🖼 Gallery"
+          variant="outline"
           onPress={() => pickImage(false)}
+          loading={flight === 'gallery'}
           disabled={loading}
-        >
-          <Text style={styles.btnOutlineText}>🖼 Gallery</Text>
-        </TouchableOpacity>
+          style={{ flex: 1 }}
+        />
       </View>
-
-      {loading && <ActivityIndicator style={{ marginTop: 20 }} />}
 
       {error ? (
         <View style={[styles.errorBox, { marginTop: 20 }]}>
