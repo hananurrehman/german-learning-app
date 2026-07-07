@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   ScrollView,
   Text,
@@ -6,17 +6,67 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Animated,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { translate, translateImage } from '../lib/ai';
-import { saveWord } from '../lib/store';
+import { getVocab, saveWord } from '../lib/store';
 import { AppButton } from './Button';
-import { styles, colors } from './theme';
+import { styles, colors, fonts } from './theme';
 
 const DIRS = [
   { key: 'de-en', label: 'DE → EN' },
   { key: 'en-de', label: 'EN → DE' },
 ];
+
+// "+ Save" mustard-outline chip → "Saved ✓" with a pop-in scale (~350ms).
+export function SaveChip({ saved, onPress }) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const wasSaved = useRef(saved);
+
+  useEffect(() => {
+    if (saved && !wasSaved.current) {
+      scale.setValue(0.85);
+      Animated.sequence([
+        Animated.timing(scale, { toValue: 1.06, duration: 200, useNativeDriver: true }),
+        Animated.timing(scale, { toValue: 1, duration: 150, useNativeDriver: true }),
+      ]).start();
+    }
+    wasSaved.current = saved;
+  }, [saved]);
+
+  return (
+    <Animated.View style={{ transform: [{ scale }] }}>
+      <TouchableOpacity
+        onPress={onPress}
+        disabled={saved}
+        activeOpacity={0.7}
+        style={
+          saved
+            ? { paddingHorizontal: 10, paddingVertical: 5 }
+            : {
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: colors.accentOutline,
+              }
+        }
+      >
+        <Text
+          style={{
+            fontFamily: fonts.headingSemi,
+            fontSize: 13,
+            color: saved ? colors.okText : colors.primary,
+          }}
+        >
+          {saved ? 'Saved ✓' : '+ Save'}
+        </Text>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
 
 export default function TranslateScreen() {
   const [dir, setDir] = useState('de-en');
@@ -24,16 +74,31 @@ export default function TranslateScreen() {
   const [flight, setFlight] = useState(null); // 'text' | 'camera' | 'gallery' | null
   const [error, setError] = useState('');
   const [result, setResult] = useState(null); // { german?, translation, words }
-  const [saved, setSaved] = useState({}); // de -> true
+  const [vocabWords, setVocabWords] = useState(new Set()); // lowercase de of saved words
 
   const loading = flight !== null; // any AI action in flight
+
+  // Keep the "already saved" set fresh whenever this tab regains focus
+  // (e.g. after saving/deleting words elsewhere).
+  useFocusEffect(
+    useCallback(() => {
+      getVocab().then((list) => {
+        setVocabWords(
+          new Set(
+            list
+              .filter((w) => w.type === 'word')
+              .map((w) => w.de.toLowerCase())
+          )
+        );
+      });
+    }, [])
+  );
 
   async function onTranslate() {
     if (loading || !text.trim()) return;
     setFlight('text');
     setError('');
     setResult(null);
-    setSaved({});
     try {
       setResult(await translate(text.trim(), dir));
     } catch (e) {
@@ -50,7 +115,6 @@ export default function TranslateScreen() {
     setFlight(fromCamera ? 'camera' : 'gallery');
     setError('');
     setResult(null);
-    setSaved({});
     try {
       const perm = fromCamera
         ? await ImagePicker.requestCameraPermissionsAsync()
@@ -81,37 +145,21 @@ export default function TranslateScreen() {
 
   async function onSave(w) {
     await saveWord({ de: w.de, article: w.article, meaning: w.meaning });
-    setSaved((s) => ({ ...s, [w.de]: true }));
+    setVocabWords((s) => new Set(s).add(w.de.toLowerCase()));
   }
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <View style={[styles.row, { marginBottom: 12 }]}>
+      <View style={[styles.segmentWrap, { marginBottom: 12 }]}>
         {DIRS.map((d) => {
           const active = d.key === dir;
           return (
             <TouchableOpacity
               key={d.key}
               onPress={() => setDir(d.key)}
-              style={{
-                flex: 1,
-                paddingVertical: 10,
-                alignItems: 'center',
-                backgroundColor: active ? colors.primary : '#fff',
-                borderWidth: 1,
-                borderColor: active ? colors.primary : colors.border,
-                borderTopLeftRadius: d.key === 'de-en' ? 8 : 0,
-                borderBottomLeftRadius: d.key === 'de-en' ? 8 : 0,
-                borderTopRightRadius: d.key === 'en-de' ? 8 : 0,
-                borderBottomRightRadius: d.key === 'en-de' ? 8 : 0,
-              }}
+              style={[styles.segment, active && styles.segmentActive]}
             >
-              <Text
-                style={{
-                  fontWeight: '600',
-                  color: active ? '#fff' : colors.text,
-                }}
-              >
+              <Text style={active ? styles.segmentTextActive : styles.segmentText}>
                 {d.label}
               </Text>
             </TouchableOpacity>
@@ -124,6 +172,7 @@ export default function TranslateScreen() {
         value={text}
         onChangeText={setText}
         placeholder={dir === 'de-en' ? 'German text…' : 'English text…'}
+        placeholderTextColor={colors.faint}
         multiline
       />
 
@@ -137,7 +186,8 @@ export default function TranslateScreen() {
 
       <View style={[styles.row, { marginTop: 10, gap: 10 }]}>
         <AppButton
-          title="📷 Camera"
+          title="Camera"
+          icon="camera"
           variant="outline"
           onPress={() => pickImage(true)}
           loading={flight === 'camera'}
@@ -145,7 +195,8 @@ export default function TranslateScreen() {
           style={{ flex: 1 }}
         />
         <AppButton
-          title="🖼 Gallery"
+          title="Gallery"
+          icon="image"
           variant="outline"
           onPress={() => pickImage(false)}
           loading={flight === 'gallery'}
@@ -165,56 +216,44 @@ export default function TranslateScreen() {
           {result.german ? (
             <View style={[styles.card, { marginBottom: 12 }]}>
               <Text style={styles.sectionLabel}>Extracted German</Text>
-              <Text style={{ fontSize: 16, color: colors.text }}>
-                {result.german}
-              </Text>
+              <Text style={styles.body}>{result.german}</Text>
             </View>
           ) : null}
 
           <View style={[styles.card, { marginBottom: 12 }]}>
             <Text style={styles.sectionLabel}>Translation</Text>
-            <Text style={{ fontSize: 16, color: colors.text }}>
-              {result.translation}
-            </Text>
+            <Text style={styles.body}>{result.translation}</Text>
           </View>
 
           {(result.words || []).length ? (
             <View style={styles.card}>
               <Text style={styles.sectionLabel}>Words</Text>
-              {result.words.map((w, i) => (
-                <View
-                  key={`${w.de}-${i}`}
-                  style={[
-                    styles.row,
-                    {
-                      justifyContent: 'space-between',
-                      paddingVertical: 8,
-                      borderTopWidth: i === 0 ? 0 : 1,
-                      borderTopColor: colors.border,
-                    },
-                  ]}
-                >
-                  <Text style={{ flex: 1, fontSize: 15, color: colors.text }}>
-                    {w.article ? `${w.article} ` : ''}
-                    <Text style={{ fontWeight: '600' }}>{w.de}</Text>
-                    {w.meaning ? ` — ${w.meaning}` : ''}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => onSave(w)}
-                    disabled={!!saved[w.de]}
-                    style={{ paddingHorizontal: 10, paddingVertical: 4 }}
+              {result.words.map((w, i) => {
+                const isSaved = vocabWords.has(w.de.toLowerCase());
+                return (
+                  <View
+                    key={`${w.de}-${i}`}
+                    style={[
+                      styles.row,
+                      {
+                        justifyContent: 'space-between',
+                        paddingVertical: 8,
+                        borderTopWidth: i === 0 ? 0 : 1,
+                        borderTopColor: colors.border,
+                      },
+                    ]}
                   >
-                    <Text
-                      style={{
-                        color: saved[w.de] ? colors.ok : colors.primary,
-                        fontWeight: '600',
-                      }}
-                    >
-                      {saved[w.de] ? 'Saved ✓' : '+ Save'}
+                    <Text style={[styles.body, { flex: 1 }]}>
+                      {w.article ? `${w.article} ` : ''}
+                      <Text style={{ fontFamily: fonts.bodySemi }}>{w.de}</Text>
+                      {w.meaning ? (
+                        <Text style={{ color: colors.muted }}> — {w.meaning}</Text>
+                      ) : null}
                     </Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
+                    <SaveChip saved={isSaved} onPress={() => onSave(w)} />
+                  </View>
+                );
+              })}
             </View>
           ) : null}
         </View>

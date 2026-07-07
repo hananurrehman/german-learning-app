@@ -1,17 +1,12 @@
 import { useState, useEffect } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { ScrollView, View, Text, TextInput, Alert } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
 import { getKey, setKey, exportJson, importJson } from '../lib/store';
-import { styles, colors } from './theme';
+import { AppButton } from './Button';
+import { styles, colors, fonts } from './theme';
 
 export default function SettingsScreen() {
   const [apiKey, setApiKey] = useState('');
@@ -68,28 +63,48 @@ export default function SettingsScreen() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <Text style={styles.label}>Anthropic API key</Text>
-      <TextInput
-        style={styles.input}
-        value={apiKey}
-        onChangeText={setApiKey}
-        placeholder="sk-ant-…"
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry
+      <View style={[styles.input, styles.row, { paddingVertical: 0, gap: 8 }]}>
+        <Feather name="key" size={16} color={colors.faint} />
+        <TextInput
+          style={{
+            flex: 1,
+            fontFamily: fonts.body,
+            fontSize: 15,
+            color: colors.text,
+            paddingVertical: 12,
+          }}
+          value={apiKey}
+          onChangeText={setApiKey}
+          placeholder="sk-ant-…"
+          placeholderTextColor={colors.faint}
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+        />
+      </View>
+      <AppButton
+        title={keySaved ? 'Saved ✓' : 'Save key'}
+        onPress={onSaveKey}
+        style={{ marginTop: 10 }}
       />
-      <TouchableOpacity style={[styles.btn, { marginTop: 10 }]} onPress={onSaveKey}>
-        <Text style={styles.btnText}>{keySaved ? 'Saved ✓' : 'Save key'}</Text>
-      </TouchableOpacity>
 
-      <View style={{ height: 1, backgroundColor: colors.border, marginVertical: 24 }} />
+      <View style={{ height: 1, backgroundColor: colors.border, marginVertical: 26 }} />
 
       <Text style={styles.label}>Backup</Text>
-      <TouchableOpacity style={[styles.btnOutline, { marginTop: 6 }]} onPress={onExport}>
-        <Text style={styles.btnOutlineText}>Export vocab (JSON)</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.btnOutline, { marginTop: 10 }]} onPress={onImport}>
-        <Text style={styles.btnOutlineText}>Import vocab (JSON)</Text>
-      </TouchableOpacity>
+      <AppButton
+        title="Export vocab (JSON)"
+        icon="upload"
+        variant="outline"
+        onPress={onExport}
+        style={{ marginTop: 6 }}
+      />
+      <AppButton
+        title="Import vocab (JSON)"
+        icon="download"
+        variant="outline"
+        onPress={onImport}
+        style={{ marginTop: 10 }}
+      />
 
       {error ? (
         <View style={[styles.errorBox, { marginTop: 20 }]}>

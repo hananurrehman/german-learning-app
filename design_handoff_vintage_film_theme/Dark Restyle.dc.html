@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#08090B; }
+    @keyframes cardIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulseIn { 0% { transform:scale(0.85); } 55% { transform:scale(1.06); } 100% { transform:scale(1); } }
+    @keyframes dotPulse { 0%,100% { opacity:0.25; transform:scale(0.85); } 50% { opacity:1; transform:scale(1); } }
+  </style>
+</helmet>
+
+<section id="2a-wrap" data-screen-label="Vintage film palette" style="padding:48px 56px 72px; font-family:'Instrument Sans',sans-serif; border-bottom:1px solid rgba(255,255,255,0.07);">
+
+  <div id="2a" style="display:flex; align-items:baseline; gap:14px; margin-bottom:8px;">
+    <a href="#2a" style="text-decoration:none;"><span style="display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:8px; background:#1A3B47; border:1px solid rgba(246,243,232,0.12); color:#9DB4AE; font-size:13px; font-weight:600;">2a</span></a>
+    <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:28px; color:#F6F3E8;">Vintage film palette</div>
+  </div>
+  <div style="color:#9DB4AE; font-size:14px; margin-bottom:40px; max-width:720px;">Warm retro on deep petrol teal — flat and matte, no gradients or glows. Mustard #F2A93B primary (dark teal text on it), sage #93B7B0 for success and active toggles. All five screens; same structure, spacing and motion as <a href="#1a" style="color:#F2A93B;">1a</a>.</div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start; flex-wrap:wrap;">
+
+    <!-- ══════════════════ 2a · TRANSLATE (vintage) ══════════════════ -->
+    <div data-screen-label="Translate — vintage" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9DB4AE; text-transform:uppercase;">01 · Translate</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#122E38; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#F6F3E8;">Translate</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="display:flex; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:4px; gap:4px;">
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; background:#93B7B0; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px;">DE → EN</div>
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; color:#9DB4AE; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer;">EN → DE</div>
+            </div>
+
+            <div style="margin-top:12px; min-height:96px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:14px; padding:14px; font-size:15px; line-height:22px; color:#F6F3E8;">Können Sie mir das Angebot bis Freitag schicken? Die Rechnung überweise ich morgen.</div>
+
+            <div style="margin-top:12px; height:52px; border-radius:14px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; cursor:pointer;" style-active="transform:scale(0.97)">Translate</div>
+
+            <div style="margin-top:10px; display:flex; gap:10px;">
+              <div style="flex:1; height:48px; border-radius:14px; background:#224955; border:1px solid rgba(246,243,232,0.10); display:flex; align-items:center; justify-content:center; gap:8px; color:#F6F3E8; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Camera</span>
+              </div>
+              <div style="flex:1; height:48px; border-radius:14px; background:#224955; border:1px solid rgba(246,243,232,0.10); display:flex; align-items:center; justify-content:center; gap:8px; color:#F6F3E8; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+                <span>Gallery</span>
+              </div>
+            </div>
+
+            <div style="margin-top:20px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px;">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Translation</div>
+              <div style="font-size:16px; line-height:23px; color:#F6F3E8;">Can you send me the offer by Friday? I'll transfer the invoice tomorrow.</div>
+            </div>
+
+            <div style="margin-top:12px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px;">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:4px;">Words</div>
+
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 0;">
+                <div style="flex:1; font-size:15px; color:#F6F3E8;">das <span style="font-weight:600;">Angebot</span><span style="color:#9DB4AE;"> — offer, quote</span></div>
+                <sc-if value="{{ notSavedWord2 }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ onSaveWord2 }}" style="padding:6px 12px; border-radius:10px; border:1px solid rgba(242,169,59,0.45); color:#F2A93B; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; cursor:pointer;" style-active="transform:scale(0.95)">+ Save</div>
+                </sc-if>
+                <sc-if value="{{ savedWord2 }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:6px 12px; border-radius:10px; color:#A9CFC7; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; animation:pulseIn 0.35s ease-out;">Saved ✓</div>
+                </sc-if>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid rgba(246,243,232,0.10);">
+                <div style="flex:1; font-size:15px; color:#F6F3E8;">die <span style="font-weight:600;">Rechnung</span><span style="color:#9DB4AE;"> — invoice, bill</span></div>
+                <div style="padding:6px 12px; border-radius:10px; color:#A9CFC7; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Saved ✓</div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid rgba(246,243,232,0.10);">
+                <div style="flex:1; font-size:15px; color:#F6F3E8;"><span style="font-weight:600;">überweisen</span><span style="color:#9DB4AE;"> — to transfer (money)</span></div>
+                <div style="padding:6px 12px; border-radius:10px; border:1px solid rgba(242,169,59,0.45); color:#F2A93B; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; cursor:pointer;" style-active="transform:scale(0.95)">+ Save</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- tab bar · Translate active · vintage -->
+          <div style="border-top:1px solid rgba(246,243,232,0.10); background:rgba(18,46,56,0.92); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#F2A93B;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 2a · WRITE (vintage) ══════════════════ -->
+    <div data-screen-label="Write — vintage" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9DB4AE; text-transform:uppercase;">02 · Write <span style="color:#F2A93B;">— interactive</span></div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#122E38; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#F6F3E8;">Write</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="min-height:96px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:14px; padding:14px; font-size:15px; line-height:22px; color:#F6F3E8;">Gestern ich habe an dem Login-Bug gearbeitet und heute werde ich die Tests fixen.</div>
+
+            <div onClick="{{ onCheck2 }}" style="margin-top:12px; height:52px; border-radius:14px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; cursor:pointer;" style-active="transform:scale(0.97)">
+              <sc-if value="{{ notChecking2 }}" hint-placeholder-val="{{ true }}"><span>Check</span></sc-if>
+              <sc-if value="{{ checking2 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; gap:6px; align-items:center;">
+                  <div style="width:8px; height:8px; border-radius:4px; background:#122E38; animation:dotPulse 0.9s infinite;"></div>
+                  <div style="width:8px; height:8px; border-radius:4px; background:#122E38; animation:dotPulse 0.9s 0.15s infinite;"></div>
+                  <div style="width:8px; height:8px; border-radius:4px; background:#122E38; animation:dotPulse 0.9s 0.3s infinite;"></div>
+                </div>
+              </sc-if>
+            </div>
+
+            <sc-if value="{{ showResults2 }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+
+                <div style="background:rgba(147,183,176,0.14); border:1px solid rgba(147,183,176,0.35); border-radius:16px; padding:16px; display:flex; gap:12px; align-items:flex-start; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.05s both;">
+                  <div style="color:#93B7B0; flex-shrink:0; margin-top:1px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg></div>
+                  <div style="font-size:15px; line-height:22px; color:#F6F3E8;">Strong sentence! Just one slip — after „Gestern" the verb moves in front of „ich". Everything else already sounds natural.</div>
+                </div>
+
+                <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.13s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Corrected</div>
+                  <div style="font-size:16px; line-height:24px; color:#F6F3E8;">Gestern <span style="color:#F2A93B; font-weight:600;">habe ich</span> an dem Login-Bug gearbeitet und heute werde ich die Tests fixen.</div>
+                </div>
+
+                <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.21s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Natural standup version</div>
+                  <div style="font-size:16px; line-height:24px; color:#F6F3E8;">Gestern war ich am Login-Bug dran, heute kümmere ich mich um die Tests.</div>
+                </div>
+
+                <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.29s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Pattern</div>
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:#F6F3E8; margin-bottom:10px;">Verb in second position (V2)</div>
+                  <div style="display:flex; flex-direction:column; gap:7px;">
+                    <div style="display:flex; gap:10px; align-items:baseline;"><div style="width:5px; height:5px; border-radius:3px; background:#F2A93B; flex-shrink:0; transform:translateY(-2px);"></div><div style="font-size:15px; line-height:21px; color:#C9D8D3;">Gestern habe ich den Bug gefixt.</div></div>
+                    <div style="display:flex; gap:10px; align-items:baseline;"><div style="width:5px; height:5px; border-radius:3px; background:#F2A93B; flex-shrink:0; transform:translateY(-2px);"></div><div style="font-size:15px; line-height:21px; color:#C9D8D3;">Heute arbeite ich an den Tests.</div></div>
+                    <div style="display:flex; gap:10px; align-items:baseline;"><div style="width:5px; height:5px; border-radius:3px; background:#F2A93B; flex-shrink:0; transform:translateY(-2px);"></div><div style="font-size:15px; line-height:21px; color:#C9D8D3;">Danach schreibe ich das Deployment-Skript.</div></div>
+                  </div>
+                </div>
+
+                <div style="background:rgba(246,243,232,0.08); border:1px solid rgba(246,243,232,0.10); border-left:3px solid #F2A93B; border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.37s both;">
+                  <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+                    <div style="color:#F2A93B;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5A6 6 0 1 0 6 11.5c.8.8 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+                    <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#F2A93B;">Remember</div>
+                  </div>
+                  <div style="font-size:15px; line-height:22px; color:#F6F3E8;">In main clauses the conjugated verb is always second — if you start with „gestern" or „heute", the verb comes before „ich".</div>
+                </div>
+
+                <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.45s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Useful phrase</div>
+                  <div style="font-size:15px; line-height:22px; color:#F6F3E8; margin-bottom:12px;"><span style="font-weight:600;">sich um etwas kümmern</span><span style="color:#9DB4AE;"> — to take care of something</span></div>
+                  <sc-if value="{{ notSavedPhrase2 }}" hint-placeholder-val="{{ true }}">
+                    <div onClick="{{ onSavePhrase2 }}" style="height:46px; border-radius:13px; background:#224955; border:1px solid rgba(242,169,59,0.45); display:flex; align-items:center; justify-content:center; color:#F2A93B; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; cursor:pointer;" style-active="transform:scale(0.97)">Save useful phrase</div>
+                  </sc-if>
+                  <sc-if value="{{ savedPhrase2 }}" hint-placeholder-val="{{ false }}">
+                    <div style="height:46px; border-radius:13px; background:rgba(147,183,176,0.15); border:1px solid rgba(147,183,176,0.45); display:flex; align-items:center; justify-content:center; color:#A9CFC7; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; animation:pulseIn 0.35s ease-out;">Saved ✓</div>
+                  </sc-if>
+                </div>
+
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- tab bar · Write active · vintage -->
+          <div style="border-top:1px solid rgba(246,243,232,0.10); background:rgba(18,46,56,0.92); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#F2A93B;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 2a · VOCAB (vintage) ══════════════════ -->
+    <div data-screen-label="Vocab — vintage" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9DB4AE; text-transform:uppercase;">03 · Vocab</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#122E38; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#F6F3E8;">Vocab</div>
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; color:#9DB4AE; cursor:pointer;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="display:flex; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:4px; gap:4px;">
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; background:#93B7B0; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px;">Words</div>
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; color:#9DB4AE; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer;">Patterns</div>
+            </div>
+
+            <div style="margin-top:12px; height:46px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:14px; display:flex; align-items:center; gap:10px; padding:0 14px;">
+              <div style="color:#9DB4AE; display:flex;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
+              <div style="font-size:15px; color:#6E8781;">Search words…</div>
+            </div>
+
+            <div style="margin-top:10px; display:flex; gap:10px;">
+              <div style="flex:1; height:46px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:14px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#6E8781;">Add a German word…</div>
+              <div style="width:46px; height:46px; border-radius:14px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38; cursor:pointer;" style-active="transform:scale(0.95)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></div>
+            </div>
+
+            <div style="margin-top:18px; display:flex; flex-direction:column; gap:8px;">
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;">der <span style="font-weight:600;">Termin</span><span style="color:#9DB4AE;"> — appointment</span></div>
+              </div>
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;">die <span style="font-weight:600;">Besprechung</span><span style="color:#9DB4AE;"> — meeting</span></div>
+              </div>
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;"><span style="font-weight:600;">verschieben</span><span style="color:#9DB4AE;"> — to postpone, move</span></div>
+              </div>
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;"><span style="font-weight:600;">zuverlässig</span><span style="color:#9DB4AE;"> — reliable</span></div>
+              </div>
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;"><span style="font-weight:600;">die Umgebung</span></div>
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#F2A93B; flex-shrink:0;">tap for meaning ›</div>
+              </div>
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;">der <span style="font-weight:600;">Fehler</span><span style="color:#9DB4AE;"> — mistake, bug</span></div>
+              </div>
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#F6F3E8;"><span style="font-weight:600;">außerdem</span><span style="color:#9DB4AE;"> — besides, in addition</span></div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px; text-align:center; font-size:12px; color:#6E8781;">Tap a word for its meaning · long-press to delete</div>
+          </div>
+
+          <!-- tab bar · Vocab active · vintage -->
+          <div style="border-top:1px solid rgba(246,243,232,0.10); background:rgba(18,46,56,0.92); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#F2A93B;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 2a · PRACTICE (vintage) ══════════════════ -->
+    <div data-screen-label="Practice — vintage" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9DB4AE; text-transform:uppercase;">04 · Practice <span style="color:#F2A93B;">— interactive</span></div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#122E38; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#F6F3E8;">Practice</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="height:52px; border-radius:14px; background:#F2A93B; display:flex; align-items:center; justify-content:center; gap:8px; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; cursor:pointer;" style-active="transform:scale(0.97)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg>
+              <span>Generate new quiz</span>
+            </div>
+
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px;">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div style="width:24px; height:24px; border-radius:8px; background:rgba(242,169,59,0.16); color:#F2A93B; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0;">1</div>
+                  <div style="font-size:15px; line-height:22px; color:#F6F3E8;">Wie sagt man „appointment" auf Deutsch — mit Artikel?</div>
+                </div>
+                <div style="height:44px; background:#122E38; border:1px solid rgba(246,243,232,0.10); border-radius:12px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#F6F3E8;">der Termin</div>
+                <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(246,243,232,0.10);">
+                  <div style="display:flex; gap:8px; align-items:center; color:#A9CFC7;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;">der Termin</div>
+                  </div>
+                  <div style="margin-top:5px; font-size:14px; line-height:20px; color:#9DB4AE;">Masculine — most nouns ending in -in that come from Latin are der.</div>
+                </div>
+              </div>
+
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px;">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div style="width:24px; height:24px; border-radius:8px; background:rgba(242,169,59,0.16); color:#F2A93B; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0;">2</div>
+                  <div style="font-size:15px; line-height:22px; color:#F6F3E8;">Fülle die Lücke: Ich muss die Besprechung auf morgen ___.</div>
+                </div>
+                <div style="height:44px; background:#122E38; border:1px solid rgba(246,243,232,0.10); border-radius:12px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#6E8781;">Your answer…</div>
+                <sc-if value="{{ revealed2 }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(246,243,232,0.10); animation:cardIn 0.4s cubic-bezier(0.2,0.7,0.3,1) both;">
+                    <div style="display:flex; gap:8px; align-items:center; color:#A9CFC7;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;">verschieben</div>
+                    </div>
+                    <div style="margin-top:5px; font-size:14px; line-height:20px; color:#9DB4AE;">„etwas auf morgen verschieben" — the infinitive goes to the end after „muss".</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:16px; padding:16px;">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div style="width:24px; height:24px; border-radius:8px; background:rgba(242,169,59,0.16); color:#F2A93B; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0;">3</div>
+                  <div style="font-size:15px; line-height:22px; color:#F6F3E8;">Übersetze: I'll take care of it.</div>
+                </div>
+                <div style="height:44px; background:#122E38; border:1px solid rgba(246,243,232,0.10); border-radius:12px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#6E8781;">Your answer…</div>
+                <sc-if value="{{ revealed2 }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(246,243,232,0.10); animation:cardIn 0.4s cubic-bezier(0.2,0.7,0.3,1) 0.08s both;">
+                    <div style="display:flex; gap:8px; align-items:center; color:#A9CFC7;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;">Ich kümmere mich darum.</div>
+                    </div>
+                    <div style="margin-top:5px; font-size:14px; line-height:20px; color:#9DB4AE;">Reflexive: sich kümmern um → darum when the object is a thing.</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ notRevealed2 }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ onReveal2 }}" style="height:48px; border-radius:14px; background:#224955; border:1px solid rgba(246,243,232,0.10); display:flex; align-items:center; justify-content:center; color:#F6F3E8; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">Reveal answers</div>
+              </sc-if>
+
+            </div>
+          </div>
+
+          <!-- tab bar · Practice active · vintage -->
+          <div style="border-top:1px solid rgba(246,243,232,0.10); background:rgba(18,46,56,0.92); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#F2A93B;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 2a · SETTINGS (vintage) ══════════════════ -->
+    <div data-screen-label="Settings — vintage" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9DB4AE; text-transform:uppercase;">05 · Settings</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#122E38; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 12px 10px; display:flex; align-items:center; gap:4px;">
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; color:#F6F3E8; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:24px; color:#F6F3E8;">Settings</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:8px 20px 20px;">
+
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Anthropic API key</div>
+            <div style="height:48px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:14px; display:flex; align-items:center; gap:10px; padding:0 14px;">
+              <div style="color:#9DB4AE; display:flex;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3-3.5 3.5"></path></svg></div>
+              <div style="font-size:15px; color:#F6F3E8; letter-spacing:2px;">••••••••••••••••</div>
+            </div>
+            <div style="margin-top:10px; height:50px; border-radius:14px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">Save key</div>
+
+            <div style="height:1px; background:rgba(246,243,232,0.10); margin:26px 0;"></div>
+
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:8px;">Backup</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="height:50px; border-radius:14px; background:#224955; border:1px solid rgba(246,243,232,0.10); display:flex; align-items:center; justify-content:center; gap:9px; color:#F6F3E8; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span>Export vocab (JSON)</span>
+              </div>
+              <div style="height:50px; border-radius:14px; background:#224955; border:1px solid rgba(246,243,232,0.10); display:flex; align-items:center; justify-content:center; gap:9px; color:#F6F3E8; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Import vocab (JSON)</span>
+              </div>
+            </div>
+
+            <div style="margin-top:26px; background:rgba(255,92,122,0.10); border:1px solid rgba(255,92,122,0.35); border-radius:14px; padding:13px 14px; font-size:14px; line-height:20px; color:#FF8DA1;">Invalid key format — it should start with „sk-ant-".</div>
+
+          </div>
+
+          <!-- tab bar · Vocab active (Settings lives in the Vocab stack) · vintage -->
+          <div style="border-top:1px solid rgba(246,243,232,0.10); background:rgba(18,46,56,0.92); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#F2A93B;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9DB4AE;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9DB4AE;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 2a · VISUAL SYSTEM (vintage) ══════════════════ -->
+    <div data-screen-label="Visual system — vintage" style="display:flex; flex-direction:column; gap:14px; width:430px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9DB4AE; text-transform:uppercase;">Visual system</div>
+      <div style="background:#122E38; border:1px solid rgba(246,243,232,0.10); border-radius:18px; padding:24px; display:flex; flex-direction:column; gap:24px;">
+
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:10px;">Color</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#122E38; border:1px solid rgba(246,243,232,0.15); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Background</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#122E38</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#1A3B47; border:1px solid rgba(246,243,232,0.15); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Surface</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#1A3B47</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#224955; border:1px solid rgba(246,243,232,0.15); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Elevated</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#224955</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:rgba(246,243,232,0.10); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Hairline</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">cream @ 10%</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#F2A93B; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Mustard</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#F2A93B</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#93B7B0; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Sage</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#93B7B0</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#FF5C7A; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Error</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#FF5C7A</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#F6F3E8; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Text</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#F6F3E8</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#9DB4AE; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Muted</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">#9DB4AE</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#1A3B47; border:1px solid rgba(246,243,232,0.10); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:rgba(246,243,232,0.08); border-left:3px solid #F2A93B; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#F6F3E8;">Remember</div><div style="font-size:11px; color:#9DB4AE; font-family:monospace;">cream 8% + bar</div></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:10px;">Type</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#F6F3E8;">Größer üben, schön!</div><div style="font-size:11px; color:#6E8781; font-family:monospace; flex-shrink:0;">Grotesk 700 · 26</div></div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:#F6F3E8;">Card heading — ä ö ü ß</div><div style="font-size:11px; color:#6E8781; font-family:monospace; flex-shrink:0;">Grotesk 600 · 16</div></div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-size:15px; line-height:22px; color:#F6F3E8;">Body — Gestern habe ich die Tests gefixt.</div><div style="font-size:11px; color:#6E8781; font-family:monospace; flex-shrink:0;">Instrument 400 · 15</div></div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE;">Section label</div><div style="font-size:11px; color:#6E8781; font-family:monospace; flex-shrink:0;">Grotesk 700 · 11 caps</div></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9DB4AE; margin-bottom:10px;">Buttons &amp; states</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="height:50px; border-radius:14px; background:#F2A93B; display:flex; align-items:center; justify-content:center; color:#122E38; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px;">Primary — flat mustard, teal text</div>
+            <div style="height:50px; border-radius:14px; background:#224955; border:1px solid rgba(246,243,232,0.10); display:flex; align-items:center; justify-content:center; color:#F6F3E8; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px;">Secondary — elevated surface</div>
+            <div style="display:flex; gap:10px;">
+              <div style="flex:1; height:44px; border-radius:13px; background:#224955; border:1px solid rgba(242,169,59,0.45); display:flex; align-items:center; justify-content:center; color:#F2A93B; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">+ Save</div>
+              <div style="flex:1; height:44px; border-radius:13px; background:rgba(147,183,176,0.15); border:1px solid rgba(147,183,176,0.45); display:flex; align-items:center; justify-content:center; color:#A9CFC7; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Saved ✓</div>
+            </div>
+            <div style="background:rgba(255,92,122,0.10); border:1px solid rgba(255,92,122,0.35); border-radius:13px; padding:12px 14px; font-size:14px; color:#FF8DA1;">Error — coral tint + soft shake on appear</div>
+          </div>
+        </div>
+
+        <div style="font-size:13px; line-height:20px; color:#9DB4AE;">Flat and matte — no gradients, no glows, no shadows. Depth = lighter surface + cream hairline. Text on mustard is always #122E38. Sage = success and active toggles; mustard = primary actions, active tab, highlights. Radii, spacing and motion unchanged from <a href="#1a" style="color:#F2A93B;">1a</a>.</div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="1a" data-screen-label="Dark restyle" style="padding:48px 56px 72px; font-family:'Instrument Sans',sans-serif;">
+
+  <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:8px;">
+    <a href="#1a" style="text-decoration:none;"><span style="display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:8px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); color:#9A9AA8; font-size:13px; font-weight:600;">1a</span></a>
+    <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:28px; color:#ECECF1;">Dark restyle — existing screens</div>
+  </div>
+  <div style="color:#9A9AA8; font-size:14px; margin-bottom:40px; max-width:720px;">Same structure and functionality as the current app. Base #0D0E12 · surfaces #16171D / #1E2028 · violet→magenta accent · Space Grotesk + Instrument Sans. On the Write screen, tap Check to replay the loading + staggered results. Save buttons and Reveal answers are tappable.</div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start; flex-wrap:wrap;">
+
+    <!-- ══════════════════ 1 · TRANSLATE ══════════════════ -->
+    <div data-screen-label="Translate" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9A9AA8; text-transform:uppercase;">01 · Translate</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#0D0E12; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#ECECF1;">Translate</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="display:flex; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:4px; gap:4px;">
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;">DE → EN</div>
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; color:#9A9AA8; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer;">EN → DE</div>
+            </div>
+
+            <div style="margin-top:12px; min-height:96px; background:#16171D; border:1px solid rgba(255,255,255,0.10); border-radius:14px; padding:14px; font-size:15px; line-height:22px; color:#ECECF1;">Können Sie mir das Angebot bis Freitag schicken? Die Rechnung überweise ich morgen.</div>
+
+            <div style="margin-top:12px; height:52px; border-radius:14px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow: {{ btnGlow }};" style-active="transform:scale(0.97)">Translate</div>
+
+            <div style="margin-top:10px; display:flex; gap:10px;">
+              <div style="flex:1; height:48px; border-radius:14px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; gap:8px; color:#ECECF1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Camera</span>
+              </div>
+              <div style="flex:1; height:48px; border-radius:14px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; gap:8px; color:#ECECF1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+                <span>Gallery</span>
+              </div>
+            </div>
+
+            <div style="margin-top:20px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px;">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Translation</div>
+              <div style="font-size:16px; line-height:23px; color:#ECECF1;">Can you send me the offer by Friday? I'll transfer the invoice tomorrow.</div>
+            </div>
+
+            <div style="margin-top:12px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px;">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:4px;">Words</div>
+
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 0;">
+                <div style="flex:1; font-size:15px; color:#ECECF1;">das <span style="font-weight:600;">Angebot</span><span style="color:#9A9AA8;"> — offer, quote</span></div>
+                <sc-if value="{{ notSavedWord }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ onSaveWord }}" style="padding:6px 12px; border-radius:10px; border:1px solid rgba(138,107,255,0.4); color:#B18CFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; cursor:pointer;" style-active="transform:scale(0.95)">+ Save</div>
+                </sc-if>
+                <sc-if value="{{ savedWord }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:6px 12px; border-radius:10px; color:#00E0A4; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; animation:pulseIn 0.35s ease-out;">Saved ✓</div>
+                </sc-if>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid rgba(255,255,255,0.08);">
+                <div style="flex:1; font-size:15px; color:#ECECF1;">die <span style="font-weight:600;">Rechnung</span><span style="color:#9A9AA8;"> — invoice, bill</span></div>
+                <div style="padding:6px 12px; border-radius:10px; color:#00E0A4; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Saved ✓</div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid rgba(255,255,255,0.08);">
+                <div style="flex:1; font-size:15px; color:#ECECF1;"><span style="font-weight:600;">überweisen</span><span style="color:#9A9AA8;"> — to transfer (money)</span></div>
+                <div style="padding:6px 12px; border-radius:10px; border:1px solid rgba(138,107,255,0.4); color:#B18CFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; cursor:pointer;" style-active="transform:scale(0.95)">+ Save</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- tab bar · Translate active -->
+          <div style="border-top:1px solid rgba(255,255,255,0.08); background:rgba(16,17,23,0.85); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; box-shadow: {{ tabGlow }};"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#C9BBFF;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 2 · WRITE (hero) ══════════════════ -->
+    <div data-screen-label="Write" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9A9AA8; text-transform:uppercase;">02 · Write <span style="color:#B18CFF;">— hero, interactive</span></div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#0D0E12; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#ECECF1;">Write</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="min-height:96px; background:#16171D; border:1px solid rgba(255,255,255,0.10); border-radius:14px; padding:14px; font-size:15px; line-height:22px; color:#ECECF1;">Gestern ich habe an dem Login-Bug gearbeitet und heute werde ich die Tests fixen.</div>
+
+            <div onClick="{{ onCheck }}" style="margin-top:12px; height:52px; border-radius:14px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow: {{ btnGlow }};" style-active="transform:scale(0.97)">
+              <sc-if value="{{ notChecking }}" hint-placeholder-val="{{ true }}"><span>Check</span></sc-if>
+              <sc-if value="{{ checking }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; gap:6px; align-items:center;">
+                  <div style="width:8px; height:8px; border-radius:4px; background:#FFFFFF; animation:dotPulse 0.9s infinite;"></div>
+                  <div style="width:8px; height:8px; border-radius:4px; background:#FFFFFF; animation:dotPulse 0.9s 0.15s infinite;"></div>
+                  <div style="width:8px; height:8px; border-radius:4px; background:#FFFFFF; animation:dotPulse 0.9s 0.3s infinite;"></div>
+                </div>
+              </sc-if>
+            </div>
+
+            <sc-if value="{{ showResults }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+
+                <div style="background:rgba(108,92,231,0.14); border:1px solid rgba(138,107,255,0.35); border-radius:16px; padding:16px; display:flex; gap:12px; align-items:flex-start; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.05s both;">
+                  <div style="color:#B18CFF; flex-shrink:0; margin-top:1px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg></div>
+                  <div style="font-size:15px; line-height:22px; color:#E4DEFF;">Strong sentence! Just one slip — after „Gestern" the verb moves in front of „ich". Everything else already sounds natural.</div>
+                </div>
+
+                <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.13s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Corrected</div>
+                  <div style="font-size:16px; line-height:24px; color:#ECECF1;">Gestern <span style="color:#00E0A4; font-weight:600;">habe ich</span> an dem Login-Bug gearbeitet und heute werde ich die Tests fixen.</div>
+                </div>
+
+                <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.21s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Natural standup version</div>
+                  <div style="font-size:16px; line-height:24px; color:#ECECF1;">Gestern war ich am Login-Bug dran, heute kümmere ich mich um die Tests.</div>
+                </div>
+
+                <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.29s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Pattern</div>
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:#ECECF1; margin-bottom:10px;">Verb in second position (V2)</div>
+                  <div style="display:flex; flex-direction:column; gap:7px;">
+                    <div style="display:flex; gap:10px; align-items:baseline;"><div style="width:5px; height:5px; border-radius:3px; background:#B18CFF; flex-shrink:0; transform:translateY(-2px);"></div><div style="font-size:15px; line-height:21px; color:#C6C6D2;">Gestern habe ich den Bug gefixt.</div></div>
+                    <div style="display:flex; gap:10px; align-items:baseline;"><div style="width:5px; height:5px; border-radius:3px; background:#B18CFF; flex-shrink:0; transform:translateY(-2px);"></div><div style="font-size:15px; line-height:21px; color:#C6C6D2;">Heute arbeite ich an den Tests.</div></div>
+                    <div style="display:flex; gap:10px; align-items:baseline;"><div style="width:5px; height:5px; border-radius:3px; background:#B18CFF; flex-shrink:0; transform:translateY(-2px);"></div><div style="font-size:15px; line-height:21px; color:#C6C6D2;">Danach schreibe ich das Deployment-Skript.</div></div>
+                  </div>
+                </div>
+
+                <div style="background:rgba(255,184,77,0.10); border:1px solid rgba(255,184,77,0.35); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.37s both;">
+                  <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+                    <div style="color:#FFB84D;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5A6 6 0 1 0 6 11.5c.8.8 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></div>
+                    <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#FFB84D;">Remember</div>
+                  </div>
+                  <div style="font-size:15px; line-height:22px; color:#F3E9DA;">In main clauses the conjugated verb is always second — if you start with „gestern" or „heute", the verb comes before „ich".</div>
+                </div>
+
+                <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; animation:cardIn 0.45s cubic-bezier(0.2,0.7,0.3,1) 0.45s both;">
+                  <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Useful phrase</div>
+                  <div style="font-size:15px; line-height:22px; color:#ECECF1; margin-bottom:12px;"><span style="font-weight:600;">sich um etwas kümmern</span><span style="color:#9A9AA8;"> — to take care of something</span></div>
+                  <sc-if value="{{ notSavedPhrase }}" hint-placeholder-val="{{ true }}">
+                    <div onClick="{{ onSavePhrase }}" style="height:46px; border-radius:13px; background:#1E2028; border:1px solid rgba(138,107,255,0.4); display:flex; align-items:center; justify-content:center; color:#B18CFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; cursor:pointer;" style-active="transform:scale(0.97)">Save useful phrase</div>
+                  </sc-if>
+                  <sc-if value="{{ savedPhrase }}" hint-placeholder-val="{{ false }}">
+                    <div style="height:46px; border-radius:13px; background:rgba(0,224,164,0.10); border:1px solid rgba(0,224,164,0.4); display:flex; align-items:center; justify-content:center; color:#00E0A4; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; animation:pulseIn 0.35s ease-out;">Saved ✓</div>
+                  </sc-if>
+                </div>
+
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- tab bar · Write active -->
+          <div style="border-top:1px solid rgba(255,255,255,0.08); background:rgba(16,17,23,0.85); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; box-shadow: {{ tabGlow }};"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#C9BBFF;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 3 · VOCAB ══════════════════ -->
+    <div data-screen-label="Vocab" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9A9AA8; text-transform:uppercase;">03 · Vocab</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#0D0E12; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#ECECF1;">Vocab</div>
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; color:#9A9AA8; cursor:pointer;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="display:flex; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:4px; gap:4px;">
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;">Words</div>
+              <div style="flex:1; text-align:center; padding:9px 0; border-radius:9px; color:#9A9AA8; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer;">Patterns</div>
+            </div>
+
+            <div style="margin-top:12px; height:46px; background:#16171D; border:1px solid rgba(255,255,255,0.10); border-radius:14px; display:flex; align-items:center; gap:10px; padding:0 14px;">
+              <div style="color:#9A9AA8; display:flex;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
+              <div style="font-size:15px; color:#6B6B78;">Search words…</div>
+            </div>
+
+            <div style="margin-top:10px; display:flex; gap:10px;">
+              <div style="flex:1; height:46px; background:#16171D; border:1px solid rgba(255,255,255,0.10); border-radius:14px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#6B6B78;">Add a German word…</div>
+              <div style="width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; cursor:pointer; box-shadow: {{ btnGlow }};" style-active="transform:scale(0.95)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></div>
+            </div>
+
+            <div style="margin-top:18px; display:flex; flex-direction:column; gap:8px;">
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;">der <span style="font-weight:600;">Termin</span><span style="color:#9A9AA8;"> — appointment</span></div>
+              </div>
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;">die <span style="font-weight:600;">Besprechung</span><span style="color:#9A9AA8;"> — meeting</span></div>
+              </div>
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;"><span style="font-weight:600;">verschieben</span><span style="color:#9A9AA8;"> — to postpone, move</span></div>
+              </div>
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;"><span style="font-weight:600;">zuverlässig</span><span style="color:#9A9AA8;"> — reliable</span></div>
+              </div>
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;"><span style="font-weight:600;">die Umgebung</span></div>
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#B18CFF; flex-shrink:0;">tap for meaning ›</div>
+              </div>
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;">der <span style="font-weight:600;">Fehler</span><span style="color:#9A9AA8;"> — mistake, bug</span></div>
+              </div>
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:10px; cursor:pointer;" style-active="transform:scale(0.985)">
+                <div style="flex:1; font-size:15px; line-height:21px; color:#ECECF1;"><span style="font-weight:600;">außerdem</span><span style="color:#9A9AA8;"> — besides, in addition</span></div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px; text-align:center; font-size:12px; color:#6B6B78;">Tap a word for its meaning · long-press to delete</div>
+          </div>
+
+          <!-- tab bar · Vocab active -->
+          <div style="border-top:1px solid rgba(255,255,255,0.08); background:rgba(16,17,23,0.85); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; box-shadow: {{ tabGlow }};"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#C9BBFF;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 4 · PRACTICE ══════════════════ -->
+    <div data-screen-label="Practice" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9A9AA8; text-transform:uppercase;">04 · Practice</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#0D0E12; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 20px 10px;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#ECECF1;">Practice</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:2px 20px 20px;">
+
+            <div style="height:52px; border-radius:14px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; gap:8px; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow: {{ btnGlow }};" style-active="transform:scale(0.97)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg>
+              <span>Generate new quiz</span>
+            </div>
+
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px;">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div style="width:24px; height:24px; border-radius:8px; background:rgba(138,107,255,0.18); color:#B18CFF; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0;">1</div>
+                  <div style="font-size:15px; line-height:22px; color:#ECECF1;">Wie sagt man „appointment" auf Deutsch — mit Artikel?</div>
+                </div>
+                <div style="height:44px; background:#0D0E12; border:1px solid rgba(255,255,255,0.10); border-radius:12px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#ECECF1;">der Termin</div>
+                <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
+                  <div style="display:flex; gap:8px; align-items:center; color:#00E0A4;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;">der Termin</div>
+                  </div>
+                  <div style="margin-top:5px; font-size:14px; line-height:20px; color:#9A9AA8;">Masculine — most nouns ending in -in that come from Latin are der.</div>
+                </div>
+              </div>
+
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px;">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div style="width:24px; height:24px; border-radius:8px; background:rgba(138,107,255,0.18); color:#B18CFF; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0;">2</div>
+                  <div style="font-size:15px; line-height:22px; color:#ECECF1;">Fülle die Lücke: Ich muss die Besprechung auf morgen ___.</div>
+                </div>
+                <div style="height:44px; background:#0D0E12; border:1px solid rgba(255,255,255,0.10); border-radius:12px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#6B6B78;">Your answer…</div>
+                <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08); animation:cardIn 0.4s cubic-bezier(0.2,0.7,0.3,1) both;">
+                    <div style="display:flex; gap:8px; align-items:center; color:#00E0A4;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;">verschieben</div>
+                    </div>
+                    <div style="margin-top:5px; font-size:14px; line-height:20px; color:#9A9AA8;">„etwas auf morgen verschieben" — the infinitive goes to the end after „muss".</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px;">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div style="width:24px; height:24px; border-radius:8px; background:rgba(138,107,255,0.18); color:#B18CFF; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0;">3</div>
+                  <div style="font-size:15px; line-height:22px; color:#ECECF1;">Übersetze: I'll take care of it.</div>
+                </div>
+                <div style="height:44px; background:#0D0E12; border:1px solid rgba(255,255,255,0.10); border-radius:12px; display:flex; align-items:center; padding:0 14px; font-size:15px; color:#6B6B78;">Your answer…</div>
+                <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08); animation:cardIn 0.4s cubic-bezier(0.2,0.7,0.3,1) 0.08s both;">
+                    <div style="display:flex; gap:8px; align-items:center; color:#00E0A4;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;">Ich kümmere mich darum.</div>
+                    </div>
+                    <div style="margin-top:5px; font-size:14px; line-height:20px; color:#9A9AA8;">Reflexive: sich kümmern um → darum when the object is a thing.</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ notRevealed }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ onReveal }}" style="height:48px; border-radius:14px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; color:#ECECF1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">Reveal answers</div>
+              </sc-if>
+
+            </div>
+          </div>
+
+          <!-- tab bar · Practice active -->
+          <div style="border-top:1px solid rgba(255,255,255,0.08); background:rgba(16,17,23,0.85); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; box-shadow: {{ tabGlow }};"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#C9BBFF;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ 5 · SETTINGS ══════════════════ -->
+    <div data-screen-label="Settings" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9A9AA8; text-transform:uppercase;">05 · Settings</div>
+      <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" dark="{{ true }}" hint-size="428,908">
+        <div style="height:100%; display:flex; flex-direction:column; background:#0D0E12; font-family:'Instrument Sans',sans-serif;">
+          <div style="padding:14px 12px 10px; display:flex; align-items:center; gap:4px;">
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; color:#ECECF1; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:24px; color:#ECECF1;">Settings</div>
+          </div>
+          <div style="flex:1; min-height:0; overflow-y:auto; padding:8px 20px 20px;">
+
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Anthropic API key</div>
+            <div style="height:48px; background:#16171D; border:1px solid rgba(255,255,255,0.10); border-radius:14px; display:flex; align-items:center; gap:10px; padding:0 14px;">
+              <div style="color:#9A9AA8; display:flex;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3-3.5 3.5"></path></svg></div>
+              <div style="font-size:15px; color:#ECECF1; letter-spacing:2px;">••••••••••••••••</div>
+            </div>
+            <div style="margin-top:10px; height:50px; border-radius:14px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer; box-shadow: {{ btnGlow }};" style-active="transform:scale(0.97)">Save key</div>
+
+            <div style="height:1px; background:rgba(255,255,255,0.08); margin:26px 0;"></div>
+
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:8px;">Backup</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="height:50px; border-radius:14px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; gap:9px; color:#ECECF1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span>Export vocab (JSON)</span>
+              </div>
+              <div style="height:50px; border-radius:14px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; gap:9px; color:#ECECF1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; cursor:pointer;" style-active="transform:scale(0.97)">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Import vocab (JSON)</span>
+              </div>
+            </div>
+
+            <div style="margin-top:26px; background:rgba(255,92,122,0.10); border:1px solid rgba(255,92,122,0.35); border-radius:14px; padding:13px 14px; font-size:14px; line-height:20px; color:#FF8DA1;">Invalid key format — it should start with „sk-ant-".</div>
+
+          </div>
+
+          <!-- tab bar · Vocab active (Settings lives in the Vocab stack) -->
+          <div style="border-top:1px solid rgba(255,255,255,0.08); background:rgba(16,17,23,0.85); backdrop-filter: {{ tabBlur }}; display:flex; padding:8px 8px 6px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Translate</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Write</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div style="width:54px; height:30px; border-radius:15px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; box-shadow: {{ tabGlow }};"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:#C9BBFF;">Vocab</div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer;">
+              <div style="width:54px; height:30px; display:flex; align-items:center; justify-content:center; color:#9A9AA8;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:500; color:#9A9AA8;">Practice</div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════════════ VISUAL SYSTEM ══════════════════ -->
+    <div data-screen-label="Visual system" style="display:flex; flex-direction:column; gap:14px; width:430px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:#9A9AA8; text-transform:uppercase;">Visual system</div>
+      <div style="background:#101117; border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:24px; display:flex; flex-direction:column; gap:24px;">
+
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:10px;">Color</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#0D0E12; border:1px solid rgba(255,255,255,0.12); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Background</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#0D0E12</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#16171D; border:1px solid rgba(255,255,255,0.12); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Surface</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#16171D</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#1E2028; border:1px solid rgba(255,255,255,0.12); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Elevated</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#1E2028</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:rgba(255,255,255,0.08); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Hairline</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#FFF @ 8%</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Accent</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#6C5CE7→#B14CFF</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#00E0A4; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Success</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#00E0A4</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#FFB84D; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Remember</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#FFB84D</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#FF5C7A; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Error</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#FF5C7A</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#ECECF1; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Text</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#ECECF1</div></div></div>
+            <div style="display:flex; align-items:center; gap:10px; background:#16171D; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:9px 12px;"><div style="width:26px; height:26px; border-radius:8px; background:#9A9AA8; flex-shrink:0;"></div><div><div style="font-size:13px; font-weight:600; color:#ECECF1;">Muted</div><div style="font-size:11px; color:#9A9AA8; font-family:monospace;">#9A9AA8</div></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:10px;">Type</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; color:#ECECF1;">Größer üben, schön!</div><div style="font-size:11px; color:#6B6B78; font-family:monospace; flex-shrink:0;">Grotesk 700 · 26</div></div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:#ECECF1;">Card heading — ä ö ü ß</div><div style="font-size:11px; color:#6B6B78; font-family:monospace; flex-shrink:0;">Grotesk 600 · 16</div></div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-size:15px; line-height:22px; color:#ECECF1;">Body — Gestern habe ich die Tests gefixt.</div><div style="font-size:11px; color:#6B6B78; font-family:monospace; flex-shrink:0;">Instrument 400 · 15</div></div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;"><div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8;">Section label</div><div style="font-size:11px; color:#6B6B78; font-family:monospace; flex-shrink:0;">Grotesk 700 · 11 caps</div></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#9A9AA8; margin-bottom:10px;">Buttons &amp; states</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="height:50px; border-radius:14px; background:linear-gradient(135deg,#6C5CE7,#B14CFF); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; box-shadow: {{ btnGlow }};">Primary — gradient + glow</div>
+            <div style="height:50px; border-radius:14px; background:#1E2028; border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; color:#ECECF1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px;">Secondary — elevated surface</div>
+            <div style="display:flex; gap:10px;">
+              <div style="flex:1; height:44px; border-radius:13px; background:#1E2028; border:1px solid rgba(138,107,255,0.4); display:flex; align-items:center; justify-content:center; color:#B18CFF; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">+ Save</div>
+              <div style="flex:1; height:44px; border-radius:13px; background:rgba(0,224,164,0.10); border:1px solid rgba(0,224,164,0.4); display:flex; align-items:center; justify-content:center; color:#00E0A4; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Saved ✓</div>
+            </div>
+            <div style="background:rgba(255,92,122,0.10); border:1px solid rgba(255,92,122,0.35); border-radius:13px; padding:12px 14px; font-size:14px; color:#FF8DA1;">Error — coral tint + soft shake on appear</div>
+          </div>
+        </div>
+
+        <div style="font-size:13px; line-height:20px; color:#9A9AA8;">Radii: cards 16 · controls 14 · chips 10. Screen gutter 20, card padding 16. Press = scale 0.97 + light haptic. Results stagger in at 80 ms steps. Depth = lighter surface + hairline, never heavy shadows. Tab bar: expo-blur glass, active tab = gradient pill (LinearGradient) + glow.</div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;buttonGlow&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Effects&quot; },
+  &quot;tabGlass&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Effects&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    checking: false,
+    showResults: true,
+    savedPhrase: false,
+    savedWord: false,
+    revealed: false,
+    checking2: false,
+    showResults2: true,
+    savedPhrase2: false,
+  };
+
+  renderVals() {
+    const glow = this.props.buttonGlow ?? true;
+    const glass = this.props.tabGlass ?? true;
+    return {
+      checking: this.state.checking,
+      notChecking: !this.state.checking,
+      showResults: this.state.showResults && !this.state.checking,
+      savedPhrase: this.state.savedPhrase,
+      notSavedPhrase: !this.state.savedPhrase,
+      savedWord: this.state.savedWord,
+      notSavedWord: !this.state.savedWord,
+      revealed: this.state.revealed,
+      notRevealed: !this.state.revealed,
+      btnGlow: glow ? '0 8px 28px rgba(126,73,255,0.30)' : 'none',
+      tabGlow: glow ? '0 4px 16px rgba(138,92,255,0.45)' : 'none',
+      tabBlur: glass ? 'blur(18px) saturate(1.4)' : 'none',
+      onCheck: () => {
+        if (this.state.checking) return;
+        this.setState({ checking: true, showResults: false, savedPhrase: false });
+        clearTimeout(this._t);
+        this._t = setTimeout(() => this.setState({ checking: false, showResults: true }), 1400);
+      },
+      checking2: this.state.checking2,
+      notChecking2: !this.state.checking2,
+      showResults2: this.state.showResults2 && !this.state.checking2,
+      savedPhrase2: this.state.savedPhrase2,
+      notSavedPhrase2: !this.state.savedPhrase2,
+      onCheck2: () => {
+        if (this.state.checking2) return;
+        this.setState({ checking2: true, showResults2: false, savedPhrase2: false });
+        clearTimeout(this._t2);
+        this._t2 = setTimeout(() => this.setState({ checking2: false, showResults2: true }), 1400);
+      },
+      onSavePhrase2: () => this.setState({ savedPhrase2: true }),
+      savedWord2: this.state.savedWord2,
+      notSavedWord2: !this.state.savedWord2,
+      onSaveWord2: () => this.setState({ savedWord2: true }),
+      revealed2: this.state.revealed2,
+      notRevealed2: !this.state.revealed2,
+      onReveal2: () => this.setState({ revealed2: true }),
+      onSavePhrase: () => this.setState({ savedPhrase: true }),
+      onSaveWord: () => this.setState({ savedWord: true }),
+      onReveal: () => this.setState({ revealed: true }),
+    };
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    clearTimeout(this._t2);
+  }
+}
+</script>
+</body>
+</html>
