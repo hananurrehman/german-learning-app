@@ -23,6 +23,20 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b3ddd808-050a-4121-b1c9-eb441eb1a92e"
+      }
+    },
+    "owner": "cheesygooey",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b3ddd808-050a-4121-b1c9-eb441eb1a92e",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    }
   }
 }
