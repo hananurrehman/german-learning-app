@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-  Alert,
+  Modal,
   Pressable,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -27,6 +27,7 @@ export default function VocabScreen() {
   const [newWord, setNewWord] = useState('');
   const [busy, setBusy] = useState({}); // de -> true while fetching meaning
   const [error, setError] = useState('');
+  const [pendingDelete, setPendingDelete] = useState(null); // item awaiting confirm
 
   const reload = useCallback(async () => {
     setVocab(await getVocab());
@@ -69,15 +70,10 @@ export default function VocabScreen() {
     }
   }
 
-  function onDelete(item) {
-    Alert.alert('Delete word', `Remove "${item.de}"?`, [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => setVocab(await deleteWord(item.de)),
-      },
-    ]);
+  async function confirmDelete() {
+    if (!pendingDelete) return;
+    setVocab(await deleteWord(pendingDelete.de));
+    setPendingDelete(null);
   }
 
   function renderItem({ item }) {
@@ -85,7 +81,7 @@ export default function VocabScreen() {
     return (
       <Pressable
         onPress={() => onTap(item)}
-        onLongPress={() => onDelete(item)}
+        onLongPress={() => setPendingDelete(item)}
         style={({ pressed }) => [
           styles.card,
           { paddingVertical: 14, marginBottom: 8 },
@@ -232,8 +228,77 @@ export default function VocabScreen() {
           paddingBottom: 10,
         }}
       >
-        Tap a word for its meaning · long-press to delete
+        Tap an entry for its meaning · long-press to delete
       </Text>
+
+      {/* Themed delete confirmation — flat matte card per the vintage film design */}
+      <Modal
+        visible={!!pendingDelete}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setPendingDelete(null)}
+      >
+        <Pressable
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(10,24,30,0.6)',
+            justifyContent: 'center',
+            padding: 32,
+          }}
+          onPress={() => setPendingDelete(null)}
+        >
+          <Pressable style={[styles.card, { padding: 20 }]} onPress={() => {}}>
+            <Text style={[styles.cardHeading, { marginBottom: 8 }]}>
+              Delete entry
+            </Text>
+            <Text style={[styles.body, { color: colors.muted, marginBottom: 18 }]}>
+              Remove{' '}
+              <Text style={{ color: colors.text, fontFamily: fonts.bodySemi }}>
+                {pendingDelete?.de}
+              </Text>{' '}
+              from your vocab?
+            </Text>
+            <View style={[styles.row, { gap: 10 }]}>
+              <Pressable
+                onPress={() => setPendingDelete(null)}
+                style={({ pressed }) => [
+                  styles.btnOutline,
+                  { flex: 1 },
+                  pressed && { transform: [{ scale: 0.97 }] },
+                ]}
+              >
+                <Text style={styles.btnOutlineText}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                onPress={confirmDelete}
+                style={({ pressed }) => [
+                  {
+                    flex: 1,
+                    minHeight: 48,
+                    borderRadius: 14,
+                    borderWidth: 1,
+                    borderColor: colors.dangerBorder,
+                    backgroundColor: colors.dangerBg,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  },
+                  pressed && { transform: [{ scale: 0.97 }] },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: fonts.headingSemi,
+                    fontSize: 15,
+                    color: colors.dangerText,
+                  }}
+                >
+                  Delete
+                </Text>
+              </Pressable>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }

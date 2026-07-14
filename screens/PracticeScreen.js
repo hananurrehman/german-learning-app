@@ -38,8 +38,8 @@ export default function PracticeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      // Exercises are built from words only; patterns aren't quizzable.
-      getVocab().then((list) => setVocab(list.filter((w) => w.type === 'word')));
+      // Both words and saved patterns feed the quiz pool.
+      getVocab().then(setVocab);
     }, [])
   );
 
@@ -149,16 +149,35 @@ export default function PracticeScreen() {
                     borderTopColor: colors.border,
                   }}
                 >
-                  <View style={[styles.row, { gap: 6 }]}>
-                    <Feather name="check" size={14} color={colors.okText} />
-                    <Text
-                      style={{
-                        fontFamily: fonts.headingSemi,
-                        fontSize: 14,
-                        color: colors.okText,
-                      }}
-                    >
-                      {ex.answer}
+                  <View style={[styles.row, { gap: 6, alignItems: 'flex-start' }]}>
+                    <Feather
+                      name="check"
+                      size={14}
+                      color={colors.okText}
+                      style={{ marginTop: 3 }}
+                    />
+                    {/* Full sentence with the answer filled in, so it can be
+                        selected / translated with Google Lens as one piece. */}
+                    <Text style={[styles.body, { flex: 1 }]}>
+                      {(ex.q || '')
+                        .replace(/\s*\([^)]*\)\s*$/, '')
+                        .split(/_{2,}/)
+                        .flatMap((part, j, arr) =>
+                          j < arr.length - 1
+                            ? [
+                                part,
+                                <Text
+                                  key={j}
+                                  style={{
+                                    fontFamily: fonts.bodySemi,
+                                    color: colors.okText,
+                                  }}
+                                >
+                                  {ex.answer}
+                                </Text>,
+                              ]
+                            : [part]
+                        )}
                     </Text>
                   </View>
                   {ex.note ? (

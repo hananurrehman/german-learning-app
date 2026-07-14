@@ -11,8 +11,18 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { checkSentence } from '../lib/ai';
 import { saveWord } from '../lib/store';
-import { AppButton } from './Button';
+import { AppButton, SaveChip } from './Button';
 import { styles, colors, fonts } from './theme';
+
+// "das Release" -> {article: 'das', de: 'Release'}; "der Test / die Tests"
+// takes the singular part; non-noun forms fall back to the whole text.
+function nounToVocabItem(form) {
+  const first = (form || '').split('/')[0].trim();
+  const m = first.match(/^(der|die|das)\s+(.+)$/i);
+  return m
+    ? { article: m[1].toLowerCase(), de: m[2].trim() }
+    : { article: '', de: first };
+}
 
 // Fade + 14px rise on mount, staggered by card position (80ms apart).
 function RiseIn({ index, children }) {
@@ -48,6 +58,7 @@ export default function WriteScreen() {
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
   const [saved, setSaved] = useState(false);
+  const [savedNouns, setSavedNouns] = useState({}); // de -> true
   const savedScale = useRef(new Animated.Value(1)).current;
 
   async function onCheck() {
@@ -56,6 +67,7 @@ export default function WriteScreen() {
     setError('');
     setResult(null);
     setSaved(false);
+    setSavedNouns({});
     try {
       setResult(await checkSentence(text.trim()));
     } catch (e) {
@@ -63,6 +75,21 @@ export default function WriteScreen() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function onReset() {
+    setText('');
+    setResult(null);
+    setError('');
+    setSaved(false);
+    setSavedNouns({});
+  }
+
+  async function onSaveNoun(form) {
+    const item = nounToVocabItem(form);
+    if (!item.de) return;
+    await saveWord({ ...item, meaning: '', type: 'word' });
+    setSavedNouns((s) => ({ ...s, [form]: true }));
   }
 
   async function onSavePhrase() {
@@ -93,6 +120,16 @@ export default function WriteScreen() {
         loading={loading}
         style={{ marginTop: 10 }}
       />
+
+      {result ? (
+        <AppButton
+          title="New sentence"
+          icon="rotate-ccw"
+          variant="outline"
+          onPress={onReset}
+          style={{ marginTop: 10 }}
+        />
+      ) : null}
 
       {error ? (
         <View style={[styles.errorBox, { marginTop: 20 }]}>
@@ -222,9 +259,15 @@ export default function WriteScreen() {
                       borderTopColor: colors.border,
                     }}
                   >
-                    <Text style={[styles.body, { fontFamily: fonts.bodySemi }]}>
-                      {n.form}
-                    </Text>
+                    <View style={[styles.row, { justifyContent: 'space-between', gap: 10 }]}>
+                      <Text style={[styles.body, { fontFamily: fonts.bodySemi, flex: 1 }]}>
+                        {n.form}
+                      </Text>
+                      <SaveChip
+                        saved={!!savedNouns[n.form]}
+                        onPress={() => onSaveNoun(n.form)}
+                      />
+                    </View>
                     {n.note ? (
                       <Text
                         style={{
