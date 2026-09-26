@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "german-app",
+    "name": "Deutsch Seekho",
     "slug": "german-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/deutsch-daily-icon.png",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#122E38",
     "ios": {
@@ -12,10 +12,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#122E38",
+        "foregroundImage": "./assets/deutsch-daily-foreground.png"
       },
       "package": "com.cheesygooey.germanapp"
     },
