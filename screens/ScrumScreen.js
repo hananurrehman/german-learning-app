@@ -210,7 +210,7 @@ export default function ScrumScreen() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <Text style={[styles.body, { color: colors.muted, marginBottom: 4 }]}>
-        Select what you did and what you plan to do. Everything is generated locally.
+        Select what you did and what you plan to do.
       </Text>
 
       <ActivitySection
