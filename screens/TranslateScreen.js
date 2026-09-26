@@ -129,6 +129,7 @@ export default function TranslateScreen() {
 
       <AppButton
         title="Translate"
+        icon="zap"
         onPress={onTranslate}
         loading={flight === 'text'}
         disabled={loading}

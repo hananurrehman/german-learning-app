@@ -116,6 +116,7 @@ export default function WriteScreen() {
 
       <AppButton
         title="Check"
+        icon="zap"
         onPress={onCheck}
         loading={loading}
         style={{ marginTop: 10 }}
