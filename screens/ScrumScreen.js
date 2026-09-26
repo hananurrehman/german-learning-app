@@ -275,7 +275,7 @@ export default function ScrumScreen() {
         </View>
       ) : null}
 
-      <AppButton title="Build update" icon="zap" onPress={buildUpdate} style={{ marginTop: 16 }} />
+      <AppButton title="Build update" onPress={buildUpdate} style={{ marginTop: 16 }} />
 
       {output ? (
         <View style={[styles.card, { marginTop: 14 }]}>
