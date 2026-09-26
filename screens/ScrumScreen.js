@@ -97,6 +97,39 @@ function joinPeriod(rows, period) {
   });
 }
 
+function sameValue(a, b) {
+  return a.trim().toLowerCase() === b.trim().toLowerCase();
+}
+
+function joinToday(rows, yesterdayRows) {
+  const completedYesterday = yesterdayRows.filter(isComplete);
+  return rows.filter(isComplete).map((row, index) => {
+    const repeatsStory =
+      row.key === 'story-continue' &&
+      completedYesterday.some(
+        (previous) =>
+          ['story-start', 'story-continue'].includes(previous.key) &&
+          sameValue(previous.values.story, row.values.story)
+      );
+    const repeatsRelease =
+      row.key === 'release-continue' &&
+      completedYesterday.some(
+        (previous) =>
+          ['release-start', 'release-continue'].includes(previous.key) &&
+          sameValue(previous.values.release, row.values.release)
+      );
+
+    if (repeatsStory || repeatsRelease) {
+      return index === 0
+        ? 'Heute werde ich damit weitermachen.'
+        : 'Außerdem werde ich damit weitermachen.';
+    }
+
+    const sentence = sentenceFor(row, 'today');
+    return index === 0 ? sentence : sentence.replace(/^Heute /, 'Außerdem ');
+  });
+}
+
 export default function ScrumScreen() {
   const [yesterday, setYesterday] = useState(makeRows);
   const [today, setToday] = useState(makeRows);
@@ -146,7 +179,7 @@ export default function ScrumScreen() {
     }
     const sentences = [
       ...joinPeriod(yesterday, 'yesterday'),
-      ...joinPeriod(today, 'today'),
+      ...joinToday(today, yesterday),
     ];
     setError('');
     setOutput(sentences.join(' '));
