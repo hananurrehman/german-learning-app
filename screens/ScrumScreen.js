@@ -137,7 +137,8 @@ export default function ScrumScreen() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [fridayKurzarbeit, setFridayKurzarbeit] = useState(false);
-  const isMonday = new Date().getDay() === 1;
+  // Temporary test override: restore `new Date().getDay() === 1` after review.
+  const isMonday = true;
 
   useFocusEffect(
     useCallback(() => {
