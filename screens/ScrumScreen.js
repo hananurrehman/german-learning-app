@@ -34,46 +34,46 @@ function makeRows() {
   }));
 }
 
-function sentenceFor(row, period) {
+function sentenceFor(row, period, pastPrefix = 'Gestern') {
   const { story, release, platform } = row.values;
   const yesterday = period === 'yesterday';
   switch (row.key) {
     case 'story-start':
       return yesterday
-        ? `Gestern habe ich mit den Tests für ${story} begonnen.`
+        ? `${pastPrefix} habe ich mit den Tests für ${story} begonnen.`
         : `Heute werde ich mit den Tests für ${story} beginnen.`;
     case 'story-continue':
       return yesterday
-        ? `Gestern habe ich mit den Tests für ${story} weitergemacht.`
+        ? `${pastPrefix} habe ich mit den Tests für ${story} weitergemacht.`
         : `Heute werde ich mit den Tests für ${story} weitermachen.`;
     case 'story-finish':
       return yesterday
-        ? `Gestern habe ich die Tests für ${story} abgeschlossen.`
+        ? `${pastPrefix} habe ich die Tests für ${story} abgeschlossen.`
         : `Heute werde ich die Tests für ${story} abschließen.`;
     case 'bugfix':
       return yesterday
-        ? `Gestern habe ich die Bugfixes für ${story} verifiziert.`
+        ? `${pastPrefix} habe ich die Bugfixes für ${story} verifiziert.`
         : `Heute werde ich die Bugfixes für ${story} verifizieren.`;
     case 'build':
       if (story) {
         return yesterday
-          ? `Gestern habe ich ${story} im ${platform} Build für Release ${release} getestet.`
+          ? `${pastPrefix} habe ich ${story} im ${platform} Build für Release ${release} getestet.`
           : `Heute werde ich ${story} im ${platform} Build für Release ${release} testen.`;
       }
       return yesterday
-        ? `Gestern habe ich den ${platform} Build für Release ${release} getestet.`
+        ? `${pastPrefix} habe ich den ${platform} Build für Release ${release} getestet.`
         : `Heute werde ich den ${platform} Build für Release ${release} testen.`;
     case 'release-start':
       return yesterday
-        ? `Gestern habe ich mit den Tests für Release ${release} begonnen.`
+        ? `${pastPrefix} habe ich mit den Tests für Release ${release} begonnen.`
         : `Heute werde ich mit den Tests für Release ${release} beginnen.`;
     case 'release-continue':
       return yesterday
-        ? `Gestern habe ich mit den Release-Tests für ${release} weitergemacht.`
+        ? `${pastPrefix} habe ich mit den Release-Tests für ${release} weitergemacht.`
         : `Heute werde ich mit den Release-Tests für ${release} weitermachen.`;
     case 'release-finish':
       return yesterday
-        ? `Gestern habe ich die Release-Tests für ${release} abgeschlossen.`
+        ? `${pastPrefix} habe ich die Release-Tests für ${release} abgeschlossen.`
         : `Heute werde ich die Release-Tests für ${release} abschließen.`;
     default:
       return '';
@@ -87,12 +87,12 @@ function isComplete(row) {
     .every((field) => row.values[field].trim());
 }
 
-function joinPeriod(rows, period) {
+function joinPeriod(rows, period, pastPrefix = 'Gestern') {
   return rows.filter(isComplete).map((row, index) => {
-    const sentence = sentenceFor(row, period);
+    const sentence = sentenceFor(row, period, pastPrefix);
     if (index === 0) return sentence;
     return period === 'yesterday'
-      ? sentence.replace(/^Gestern habe ich /, 'Außerdem habe ich ')
+      ? sentence.replace(`${pastPrefix} habe ich `, 'Außerdem habe ich ')
       : sentence.replace(/^Heute /, 'Außerdem ');
   });
 }
@@ -136,6 +136,8 @@ export default function ScrumScreen() {
   const [recents, setRecents] = useState({ stories: [], releases: [] });
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
+  const [fridayKurzarbeit, setFridayKurzarbeit] = useState(false);
+  const isMonday = new Date().getDay() === 1;
 
   useFocusEffect(
     useCallback(() => {
@@ -177,8 +179,14 @@ export default function ScrumScreen() {
       setError('Add the required story or release names.');
       return;
     }
+    const pastPrefix = isMonday
+      ? fridayKurzarbeit
+        ? 'Am Donnerstag'
+        : 'Am Freitag'
+      : 'Gestern';
     const sentences = [
-      ...joinPeriod(yesterday, 'yesterday'),
+      ...(isMonday && fridayKurzarbeit ? ['Am Freitag hatte ich Kurzarbeit.'] : []),
+      ...joinPeriod(yesterday, 'yesterday', pastPrefix),
       ...joinToday(today, yesterday),
     ];
     setError('');
@@ -196,6 +204,7 @@ export default function ScrumScreen() {
     setToday(makeRows());
     setOutput('');
     setError('');
+    setFridayKurzarbeit(false);
   }
 
   return (
@@ -205,7 +214,7 @@ export default function ScrumScreen() {
       </Text>
 
       <ActivitySection
-        title="Yesterday"
+        title={isMonday ? (fridayKurzarbeit ? 'Previous work · Thursday' : 'Previous work · Friday') : 'Yesterday'}
         icon="clock"
         rows={yesterday}
         setRows={setYesterday}
@@ -213,6 +222,43 @@ export default function ScrumScreen() {
         recents={recents}
         liveValues={liveValues}
       />
+      {isMonday ? (
+        <Pressable
+          onPress={() => setFridayKurzarbeit((value) => !value)}
+          style={[
+            styles.card,
+            {
+              padding: 13,
+              borderColor: fridayKurzarbeit ? colors.accentOutline : colors.border,
+            },
+          ]}
+        >
+          <View style={[styles.row, { gap: 10 }]}>
+            <View
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: fridayKurzarbeit ? colors.primary : colors.elevated,
+              }}
+            >
+              <Feather
+                name={fridayKurzarbeit ? 'check' : 'plus'}
+                size={15}
+                color={fridayKurzarbeit ? colors.onPrimary : colors.muted}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.cardHeading}>Friday was Kurzarbeit</Text>
+              <Text style={{ fontFamily: fonts.body, fontSize: 13, color: colors.muted, marginTop: 2 }}>
+                Previous work will refer to Thursday.
+              </Text>
+            </View>
+          </View>
+        </Pressable>
+      ) : null}
       <ActivitySection
         title="Today"
         icon="sun"
