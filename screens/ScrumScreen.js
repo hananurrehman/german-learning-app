@@ -41,40 +41,40 @@ function sentenceFor(row, period) {
     case 'story-start':
       return yesterday
         ? `Gestern habe ich mit den Tests für ${story} begonnen.`
-        : `Heute beginne ich mit den Tests für ${story}.`;
+        : `Heute werde ich mit den Tests für ${story} beginnen.`;
     case 'story-continue':
       return yesterday
         ? `Gestern habe ich mit den Tests für ${story} weitergemacht.`
-        : `Heute mache ich mit den Tests für ${story} weiter.`;
+        : `Heute werde ich mit den Tests für ${story} weitermachen.`;
     case 'story-finish':
       return yesterday
         ? `Gestern habe ich die Tests für ${story} abgeschlossen.`
-        : `Heute schließe ich die Tests für ${story} ab.`;
+        : `Heute werde ich die Tests für ${story} abschließen.`;
     case 'bugfix':
       return yesterday
         ? `Gestern habe ich die Bugfixes für ${story} verifiziert.`
-        : `Heute verifiziere ich die Bugfixes für ${story}.`;
+        : `Heute werde ich die Bugfixes für ${story} verifizieren.`;
     case 'build':
       if (story) {
         return yesterday
           ? `Gestern habe ich ${story} im ${platform} Build für Release ${release} getestet.`
-          : `Heute teste ich ${story} im ${platform} Build für Release ${release}.`;
+          : `Heute werde ich ${story} im ${platform} Build für Release ${release} testen.`;
       }
       return yesterday
         ? `Gestern habe ich den ${platform} Build für Release ${release} getestet.`
-        : `Heute teste ich den ${platform} Build für Release ${release}.`;
+        : `Heute werde ich den ${platform} Build für Release ${release} testen.`;
     case 'release-start':
       return yesterday
         ? `Gestern habe ich mit den Tests für Release ${release} begonnen.`
-        : `Heute beginne ich mit den Tests für Release ${release}.`;
+        : `Heute werde ich mit den Tests für Release ${release} beginnen.`;
     case 'release-continue':
       return yesterday
         ? `Gestern habe ich mit den Release-Tests für ${release} weitergemacht.`
-        : `Heute mache ich mit den Release-Tests für ${release} weiter.`;
+        : `Heute werde ich mit den Release-Tests für ${release} weitermachen.`;
     case 'release-finish':
       return yesterday
         ? `Gestern habe ich die Release-Tests für ${release} abgeschlossen.`
-        : `Heute schließe ich die Release-Tests für ${release} ab.`;
+        : `Heute werde ich die Release-Tests für ${release} abschließen.`;
     default:
       return '';
   }
