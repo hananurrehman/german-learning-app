@@ -22,6 +22,7 @@ import {
 
 import TranslateScreen from './screens/TranslateScreen';
 import WriteScreen from './screens/WriteScreen';
+import ScrumScreen from './screens/ScrumScreen';
 import VocabScreen from './screens/VocabScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import PracticeScreen from './screens/PracticeScreen';
@@ -93,6 +94,7 @@ function VocabTab() {
 const TAB_ICON = {
   Translate: 'globe',
   Write: 'edit-3',
+  Scrum: 'clipboard',
   Vocab: 'book-open',
   Practice: 'target',
 };
@@ -156,6 +158,7 @@ function Tabs() {
     >
       <Tab.Screen name="Translate" component={TranslateScreen} />
       <Tab.Screen name="Write" component={WriteScreen} />
+      <Tab.Screen name="Scrum" component={ScrumScreen} />
       <Tab.Screen
         name="Vocab"
         component={VocabTab}
