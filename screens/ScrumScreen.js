@@ -18,6 +18,7 @@ const ACTIVITIES = [
   { key: 'story-continue', label: 'Continue story testing', fields: ['story'] },
   { key: 'story-finish', label: 'Finish story testing', fields: ['story'] },
   { key: 'bugfix', label: 'Verify bug fixes', fields: ['story'] },
+  { key: 'e2e-improvements', label: 'Work on E2E improvements', fields: [] },
   { key: 'build', label: 'Test a build', fields: ['platform', 'release', 'story'] },
   { key: 'release-start', label: 'Start release testing', fields: ['release'] },
   { key: 'release-continue', label: 'Continue release testing', fields: ['release'] },
@@ -54,6 +55,10 @@ function sentenceFor(row, period, pastPrefix = 'Gestern') {
       return yesterday
         ? `${pastPrefix} habe ich die Bugfixes für ${story} verifiziert.`
         : `Heute werde ich die Bugfixes für ${story} verifizieren.`;
+    case 'e2e-improvements':
+      return yesterday
+        ? `${pastPrefix} habe ich an E2E-Verbesserungen gearbeitet.`
+        : 'Heute werde ich an E2E-Verbesserungen arbeiten.';
     case 'build':
       if (story) {
         return yesterday
@@ -118,11 +123,18 @@ function joinToday(rows, yesterdayRows) {
           ['release-start', 'release-continue'].includes(previous.key) &&
           sameValue(previous.values.release, row.values.release)
       );
+    const continuesE2e =
+      row.key === 'e2e-improvements' &&
+      completedYesterday.some((previous) => previous.key === 'e2e-improvements');
 
-    if (repeatsStory || repeatsRelease) {
+    if (repeatsStory || repeatsRelease || continuesE2e) {
       return index === 0
-        ? 'Heute werde ich damit weitermachen.'
-        : 'Außerdem werde ich damit weitermachen.';
+        ? continuesE2e
+          ? 'Heute werde ich weiter daran arbeiten.'
+          : 'Heute werde ich damit weitermachen.'
+        : continuesE2e
+          ? 'Außerdem werde ich weiter daran arbeiten.'
+          : 'Außerdem werde ich damit weitermachen.';
     }
 
     const sentence = sentenceFor(row, 'today');
