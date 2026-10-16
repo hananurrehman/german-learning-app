@@ -100,7 +100,11 @@ export default function TranslateScreen() {
   }
 
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={[styles.segmentWrap, { marginBottom: 12 }]}>
         {DIRS.map((d) => {
           const active = d.key === dir;

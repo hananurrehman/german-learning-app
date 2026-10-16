@@ -104,7 +104,11 @@ export default function WriteScreen() {
   }
 
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <TextInput
         style={[styles.input, styles.multiline]}
         value={text}
