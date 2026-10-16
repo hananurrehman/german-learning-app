@@ -201,6 +201,7 @@ export default function VocabScreen() {
         data={visible}
         keyExtractor={(w) => w.de}
         renderItem={renderItem}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 16 }}
         ListEmptyComponent={
           <Text

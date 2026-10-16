@@ -109,7 +109,11 @@ export default function SettingsScreen() {
   }
 
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <Text style={styles.label}>AI provider</Text>
       <View style={[styles.segmentWrap, { marginBottom: 18 }]}>
         {[

@@ -1,5 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { Pressable, Text, View, Animated, TouchableOpacity } from 'react-native';
+import {
+  Pressable,
+  Text,
+  View,
+  Animated,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles, colors, fonts } from './theme';
 
@@ -106,6 +113,11 @@ export function AppButton({
   const textStyle = variant === 'outline' ? styles.btnOutlineText : styles.btnText;
   const dotColor = variant === 'outline' ? colors.text : colors.onPrimary;
 
+  function handlePress() {
+    Keyboard.dismiss();
+    onPress?.();
+  }
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -114,7 +126,7 @@ export function AppButton({
         pressed && !blocked && { transform: [{ scale: 0.97 }] },
         style,
       ]}
-      onPress={blocked ? undefined : onPress}
+      onPress={blocked ? undefined : handlePress}
       disabled={blocked}
     >
       <View style={[styles.row, { gap: 8 }]}>

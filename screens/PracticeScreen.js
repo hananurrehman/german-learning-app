@@ -83,7 +83,11 @@ export default function PracticeScreen() {
   }
 
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <AppButton
         title={exercises ? 'Generate new quiz' : 'Generate quiz'}
         icon="zap"
