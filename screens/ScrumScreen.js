@@ -1,5 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
+  Keyboard,
+  Modal,
   Pressable,
   ScrollView,
   Share,
@@ -7,6 +9,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { getScrumRecents, saveScrumRecents } from '../lib/store';
@@ -19,26 +22,29 @@ const ACTIVITIES = [
   { key: 'story-finish', label: 'Finish story testing', fields: ['story'] },
   { key: 'bugfix', label: 'Verify bug fixes', fields: ['story'] },
   { key: 'e2e-improvements', label: 'Work on E2E improvements', fields: [] },
+  { key: 'task', label: 'Work on a task', fields: ['task'] },
   { key: 'build', label: 'Test a build', fields: ['platform', 'release', 'story'] },
   { key: 'release-start', label: 'Start release testing', fields: ['release'] },
   { key: 'release-continue', label: 'Continue release testing', fields: ['release'] },
   { key: 'release-finish', label: 'Finish release testing', fields: ['release'] },
 ];
 
-const EMPTY_VALUES = { story: '', release: '', platform: 'Mobile' };
+const ACTIVITY_GROUPS = [
+  { title: 'Story testing', keys: ['story-start', 'story-continue', 'story-finish', 'bugfix'] },
+  { title: 'Builds & releases', keys: ['build', 'release-start', 'release-continue', 'release-finish'] },
+  { title: 'Other work', keys: ['e2e-improvements', 'task'] },
+];
 
-function makeRows() {
-  return ACTIVITIES.map((activity) => ({
-    ...activity,
-    selected: false,
-    values: { ...EMPTY_VALUES },
-  }));
-}
+const EMPTY_VALUES = { story: '', release: '', task: '', platform: 'Mobile' };
 
 function sentenceFor(row, period, pastPrefix = 'Gestern') {
-  const { story, release, platform } = row.values;
+  const { story, release, task, platform } = row.values;
   const yesterday = period === 'yesterday';
   switch (row.key) {
+    case 'task':
+      return yesterday
+        ? `${pastPrefix} habe ich an der Aufgabe ${task} gearbeitet.`
+        : `Heute werde ich an der Aufgabe ${task} arbeiten.`;
     case 'story-start':
       return yesterday
         ? `${pastPrefix} habe ich mit den Tests für ${story} begonnen.`
@@ -143,17 +149,26 @@ function joinToday(rows, yesterdayRows) {
 }
 
 export default function ScrumScreen() {
-  const [yesterday, setYesterday] = useState(makeRows);
-  const [today, setToday] = useState(makeRows);
-  const [recents, setRecents] = useState({ stories: [], releases: [] });
+  const [yesterday, setYesterday] = useState([]);
+  const [today, setToday] = useState([]);
+  const [recents, setRecents] = useState({ stories: [], releases: [], tasks: [] });
+  const [pickerPeriod, setPickerPeriod] = useState(null);
+  const nextRowId = useRef(0);
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [fridayKurzarbeit, setFridayKurzarbeit] = useState(false);
   const isMonday = new Date().getDay() === 1;
+  const previousTitle = isMonday
+    ? (fridayKurzarbeit ? 'Previous work · Thursday' : 'Previous work · Friday')
+    : 'Yesterday';
 
   useFocusEffect(
     useCallback(() => {
-      getScrumRecents().then(setRecents);
+      let active = true;
+      getScrumRecents().then((values) => {
+        if (active) setRecents(values);
+      }).catch(() => {});
+      return () => { active = false; };
     }, [])
   );
 
@@ -163,10 +178,13 @@ export default function ScrumScreen() {
     return {
       stories: unique(all.map((row) => row.values.story.trim())),
       releases: unique(all.map((row) => row.values.release.trim())),
+      tasks: unique(all.map((row) => row.values.task).filter((task) => task.trim())),
     };
   }, [yesterday, today]);
 
   function updateRows(setRows, rowIndex, patch) {
+    setOutput('');
+    setError('');
     setRows((rows) =>
       rows.map((row, index) =>
         index === rowIndex
@@ -180,6 +198,31 @@ export default function ScrumScreen() {
     );
   }
 
+  function addActivity(activity) {
+    const setRows = pickerPeriod === 'yesterday' ? setYesterday : setToday;
+    const row = {
+      ...activity,
+      id: nextRowId.current++,
+      selected: true,
+      values: { ...EMPTY_VALUES },
+    };
+    setRows((rows) => [...rows, row]);
+    setPickerPeriod(null);
+    setOutput('');
+    setError('');
+  }
+
+  function removeActivity(setRows, rowIndex) {
+    setRows((rows) => rows.filter((_, index) => index !== rowIndex));
+    setOutput('');
+    setError('');
+  }
+
+  function openPicker(period) {
+    Keyboard.dismiss();
+    setPickerPeriod(period);
+  }
+
   async function buildUpdate() {
     const selected = [...yesterday, ...today].filter((row) => row.selected);
     if (!selected.length) {
@@ -188,7 +231,7 @@ export default function ScrumScreen() {
     }
     const incomplete = selected.some((row) => !isComplete(row));
     if (incomplete) {
-      setError('Add the required story or release names.');
+      setError('Add the required task, story or release names.');
       return;
     }
     const pastPrefix = isMonday
@@ -203,7 +246,11 @@ export default function ScrumScreen() {
     ];
     setError('');
     setOutput(sentences.join(' '));
-    setRecents(await saveScrumRecents(liveValues));
+    try {
+      setRecents(await saveScrumRecents(liveValues));
+    } catch {
+      setError('Your update is ready, but recent names could not be saved.');
+    }
   }
 
   async function shareUpdate() {
@@ -212,31 +259,37 @@ export default function ScrumScreen() {
   }
 
   function clearAll() {
-    setYesterday(makeRows());
-    setToday(makeRows());
+    setYesterday([]);
+    setToday([]);
     setOutput('');
     setError('');
     setFridayKurzarbeit(false);
   }
 
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+    <>
+    <ScrollView style={styles.screen} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
       <Text style={[styles.body, { color: colors.muted, marginBottom: 4 }]}>
         Select what you did and what you plan to do.
       </Text>
 
       <ActivitySection
-        title={isMonday ? (fridayKurzarbeit ? 'Previous work · Thursday' : 'Previous work · Friday') : 'Yesterday'}
+        title={previousTitle}
         icon="clock"
         rows={yesterday}
         setRows={setYesterday}
         updateRows={updateRows}
+        onAdd={() => openPicker('yesterday')}
+        onRemove={(index) => removeActivity(setYesterday, index)}
         recents={recents}
         liveValues={liveValues}
       />
       {isMonday ? (
         <Pressable
-          onPress={() => setFridayKurzarbeit((value) => !value)}
+          onPress={() => {
+            setFridayKurzarbeit((value) => !value);
+            setOutput('');
+          }}
           style={[
             styles.card,
             {
@@ -277,6 +330,8 @@ export default function ScrumScreen() {
         rows={today}
         setRows={setToday}
         updateRows={updateRows}
+        onAdd={() => openPicker('today')}
+        onRemove={(index) => removeActivity(setToday, index)}
         recents={recents}
         liveValues={liveValues}
       />
@@ -315,10 +370,17 @@ export default function ScrumScreen() {
         </View>
       ) : null}
     </ScrollView>
+    <ActivityPicker
+      period={pickerPeriod}
+      title={pickerPeriod === 'yesterday' ? previousTitle : 'Today'}
+      onClose={() => setPickerPeriod(null)}
+      onSelect={addActivity}
+    />
+    </>
   );
 }
 
-function ActivitySection({ title, icon, rows, setRows, updateRows, recents, liveValues }) {
+function ActivitySection({ title, icon, rows, setRows, updateRows, recents, liveValues, onAdd, onRemove }) {
   return (
     <View style={{ marginTop: 20 }}>
       <View style={[styles.row, { gap: 7, marginBottom: 8 }]}>
@@ -327,21 +389,23 @@ function ActivitySection({ title, icon, rows, setRows, updateRows, recents, live
       </View>
       {rows.map((row, index) => (
         <ActivityRow
-          key={row.key}
+          key={row.id}
           row={row}
-          onToggle={() => updateRows(setRows, index, { selected: !row.selected })}
+          onRemove={() => onRemove(index)}
           onValue={(field, value) => updateRows(setRows, index, { values: { [field]: value } })}
           suggestions={{
             stories: [...liveValues.stories, ...recents.stories],
             releases: [...liveValues.releases, ...recents.releases],
+            tasks: [...liveValues.tasks, ...recents.tasks],
           }}
         />
       ))}
+      <AppButton title="Add activity" icon="plus" variant="outline" onPress={onAdd} />
     </View>
   );
 }
 
-function ActivityRow({ row, onToggle, onValue, suggestions }) {
+function ActivityRow({ row, onRemove, onValue, suggestions }) {
   return (
     <View
       style={[
@@ -353,7 +417,7 @@ function ActivityRow({ row, onToggle, onValue, suggestions }) {
         },
       ]}
     >
-      <Pressable onPress={onToggle} style={[styles.row, { gap: 10, minHeight: 30 }]}>
+      <View style={[styles.row, { gap: 10, minHeight: 30 }]}>
         <View
           style={{
             width: 26,
@@ -371,10 +435,32 @@ function ActivityRow({ row, onToggle, onValue, suggestions }) {
           />
         </View>
         <Text style={[styles.cardHeading, { flex: 1 }]}>{row.label}</Text>
-      </Pressable>
+        <Pressable
+          onPress={onRemove}
+          accessibilityRole="button"
+          accessibilityLabel={`Remove ${row.label}`}
+          style={{ width: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Feather name="x" size={16} color={colors.muted} />
+        </Pressable>
+      </View>
 
       {row.selected ? (
         <View style={{ marginTop: 10, gap: 9 }}>
+          {row.fields.includes('task') ? (
+            <View>
+              <ValueField
+                label="Task name"
+                value={row.values.task}
+                onChange={(value) => onValue('task', value)}
+                suggestions={suggestions.tasks}
+                preserveCase
+              />
+              <Text style={{ fontFamily: fonts.body, fontSize: 12, color: colors.muted, marginTop: 6 }}>
+                Task name is kept exactly as entered.
+              </Text>
+            </View>
+          ) : null}
           {row.fields.includes('platform') ? (
             <View style={styles.segmentWrap}>
               {['Mobile', 'Web'].map((platform) => {
@@ -415,7 +501,7 @@ function ActivityRow({ row, onToggle, onValue, suggestions }) {
   );
 }
 
-function ValueField({ label, value, onChange, suggestions }) {
+function ValueField({ label, value, onChange, suggestions, preserveCase = false }) {
   const unique = [...new Set(suggestions.filter((item) => item && item !== value))].slice(0, 4);
   return (
     <View>
@@ -426,7 +512,8 @@ function ValueField({ label, value, onChange, suggestions }) {
         onChangeText={onChange}
         placeholder={label}
         placeholderTextColor={colors.faint}
-        autoCapitalize="sentences"
+        autoCapitalize={preserveCase ? 'none' : 'sentences'}
+        autoCorrect={preserveCase ? false : undefined}
       />
       {unique.length ? (
         <View style={[styles.row, { flexWrap: 'wrap', gap: 6, marginTop: 7 }]}>
@@ -451,5 +538,67 @@ function ValueField({ label, value, onChange, suggestions }) {
         </View>
       ) : null}
     </View>
+  );
+}
+
+function ActivityPicker({ period, title, onClose, onSelect }) {
+  const insets = useSafeAreaInsets();
+  const [expanded, setExpanded] = useState('Other work');
+
+  return (
+    <Modal
+      visible={period !== null}
+      transparent
+      animationType="slide"
+      onRequestClose={onClose}
+      onShow={() => setExpanded('Other work')}
+    >
+      <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.45)', paddingTop: insets.top + 20 }}>
+        <Pressable
+          onPress={onClose}
+          accessibilityRole="button"
+          accessibilityLabel="Close activity picker"
+          style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
+        />
+        <View
+          accessibilityViewIsModal
+          style={{ backgroundColor: colors.card, borderTopLeftRadius: 22, borderTopRightRadius: 22, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 20, paddingTop: 10, paddingBottom: Math.max(insets.bottom, 16), maxHeight: '100%' }}
+        >
+          <View style={{ width: 36, height: 4, borderRadius: 4, backgroundColor: colors.muted, alignSelf: 'center', marginBottom: 16 }} />
+          <View style={[styles.row, { gap: 8 }]}>
+            <Text accessibilityRole="header" style={[styles.cardHeading, { fontSize: 20, flex: 1 }]}>
+              Add activity · {title}
+            </Text>
+            <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Close activity picker" style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
+              <Feather name="x" size={20} color={colors.muted} />
+            </Pressable>
+          </View>
+          <ScrollView keyboardShouldPersistTaps="handled" style={{ flexShrink: 1 }}>
+            {ACTIVITY_GROUPS.map((group) => (
+              <View key={group.title} style={{ borderBottomWidth: 1, borderColor: colors.border, paddingVertical: 10 }}>
+                <Pressable
+                  onPress={() => setExpanded(expanded === group.title ? null : group.title)}
+                  accessibilityRole="button"
+                  accessibilityState={{ expanded: expanded === group.title }}
+                  style={[styles.row, { minHeight: 44, gap: 10 }]}
+                >
+                  <Text style={[styles.cardHeading, { flex: 1 }]}>{group.title}</Text>
+                  <Feather name={expanded === group.title ? 'chevron-up' : 'chevron-down'} size={18} color={colors.muted} />
+                </Pressable>
+                {expanded === group.title ? group.keys.map((key) => {
+                  const activity = ACTIVITIES.find((item) => item.key === key);
+                  return (
+                    <Pressable key={key} onPress={() => onSelect(activity)} accessibilityRole="button" style={[styles.row, { minHeight: 48, gap: 10, paddingHorizontal: 8, paddingVertical: 10 }]}>
+                      <Feather name="plus" size={15} color={colors.muted} />
+                      <Text style={[styles.body, { flex: 1 }]}>{activity.label}</Text>
+                    </Pressable>
+                  );
+                }) : null}
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      </View>
+    </Modal>
   );
 }
