@@ -1,26 +1,74 @@
 import { useState, useEffect } from 'react';
-import { ScrollView, View, Text, TextInput, Alert } from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  Alert,
+  Pressable,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
-import { getKey, setKey, exportJson, importJson } from '../lib/store';
+import {
+  AI_PROVIDERS,
+  getKey,
+  setKey,
+  getProvider,
+  setProvider,
+  exportJson,
+  importJson,
+} from '../lib/store';
 import { AppButton } from './Button';
 import { styles, colors, fonts } from './theme';
 
 export default function SettingsScreen() {
-  const [apiKey, setApiKey] = useState('');
+  const [provider, setProviderState] = useState(AI_PROVIDERS.CLAUDE);
+  const [apiKeys, setApiKeys] = useState({
+    [AI_PROVIDERS.CLAUDE]: '',
+    [AI_PROVIDERS.GEMINI]: '',
+  });
   const [keySaved, setKeySaved] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    getKey().then((k) => k && setApiKey(k));
+    Promise.all([
+      getProvider(),
+      getKey(AI_PROVIDERS.CLAUDE),
+      getKey(AI_PROVIDERS.GEMINI),
+    ]).then(([savedProvider, claudeKey, geminiKey]) => {
+      setProviderState(savedProvider);
+      setApiKeys({
+        [AI_PROVIDERS.CLAUDE]: claudeKey || '',
+        [AI_PROVIDERS.GEMINI]: geminiKey || '',
+      });
+    });
   }, []);
 
   async function onSaveKey() {
-    await setKey(apiKey.trim());
-    setKeySaved(true);
-    setTimeout(() => setKeySaved(false), 2000);
+    setError('');
+    try {
+      await Promise.all([
+        setProvider(provider),
+        setKey(provider, apiKeys[provider].trim()),
+      ]);
+      setKeySaved(true);
+      setTimeout(() => setKeySaved(false), 2000);
+    } catch (e) {
+      setError(e.message || String(e));
+    }
+  }
+
+  function selectProvider(nextProvider) {
+    setProviderState(nextProvider);
+    setKeySaved(false);
+    setError('');
+  }
+
+  function updateCurrentKey(value) {
+    setApiKeys((keys) => ({ ...keys, [provider]: value }));
+    setKeySaved(false);
   }
 
   async function onExport() {
@@ -62,7 +110,34 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <Text style={styles.label}>Anthropic API key</Text>
+      <Text style={styles.label}>AI provider</Text>
+      <View style={[styles.segmentWrap, { marginBottom: 18 }]}>
+        {[
+          { key: AI_PROVIDERS.CLAUDE, label: 'Claude' },
+          { key: AI_PROVIDERS.GEMINI, label: 'Gemini' },
+        ].map((item) => {
+          const active = provider === item.key;
+          return (
+            <Pressable
+              key={item.key}
+              onPress={() => selectProvider(item.key)}
+              style={[styles.segment, active && styles.segmentActive]}
+            >
+              <Text
+                style={active ? styles.segmentTextActive : styles.segmentText}
+              >
+                {item.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      <Text style={styles.label}>
+        {provider === AI_PROVIDERS.GEMINI
+          ? 'Gemini API key'
+          : 'Anthropic API key'}
+      </Text>
       <View style={[styles.input, styles.row, { paddingVertical: 0, gap: 8 }]}>
         <Feather name="key" size={16} color={colors.faint} />
         <TextInput
@@ -73,9 +148,9 @@ export default function SettingsScreen() {
             color: colors.text,
             paddingVertical: 12,
           }}
-          value={apiKey}
-          onChangeText={setApiKey}
-          placeholder="sk-ant-…"
+          value={apiKeys[provider]}
+          onChangeText={updateCurrentKey}
+          placeholder={provider === AI_PROVIDERS.GEMINI ? 'AIza…' : 'sk-ant-…'}
           placeholderTextColor={colors.faint}
           autoCapitalize="none"
           autoCorrect={false}
