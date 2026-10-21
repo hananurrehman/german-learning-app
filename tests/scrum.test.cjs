@@ -30,6 +30,7 @@ function load(file, mocks, extra = '') {
 
 function screenHarness() {
   const values = [];
+  const sharedMessages = [];
   let cursor = 0;
   const React = {
     createElement: (type, props, ...children) => ({ type, props: { ...props, children } }),
@@ -54,7 +55,7 @@ function screenHarness() {
     'react-native': {
       Keyboard: { dismiss() {} }, Modal: 'Modal', Pressable: 'Pressable',
       ScrollView: 'ScrollView', Text: 'Text', TextInput: 'TextInput', View: 'View',
-      Share: { share: async () => {} },
+      Share: { share: async (payload) => { sharedMessages.push(payload.message); } },
     },
     'react-native-safe-area-context': { useSafeAreaInsets: () => ({ top: 0, bottom: 0 }) },
     '@react-navigation/native': { useFocusEffect() {} },
@@ -62,9 +63,10 @@ function screenHarness() {
     '../lib/store': { getScrumRecents: async () => ({}), saveScrumRecents: async (v) => v },
     './Button': { AppButton: 'AppButton' },
     './theme': { colors: {}, fonts: {}, styles: {} },
-  }, '\nexports.testApi = { ACTIVITIES, EMPTY_VALUES, sentenceFor, joinToday, joinPeriod, isComplete, ActivitySection, ActivityPicker };');
+  }, '\nexports.testApi = { ACTIVITIES, EMPTY_VALUES, sentenceFor, englishSentenceFor, joinToday, joinPeriod, isComplete, ActivitySection, ActivityPicker, ActivityRow, ValueField };');
   return {
     ...api.testApi,
+    sharedMessages,
     render() { cursor = 0; return api.default(); },
   };
 }
@@ -105,7 +107,82 @@ test('existing story, release and E2E continuation behavior remains intact', () 
   }
   const e2e = makeRow(api, 'e2e-improvements');
   assert.equal(api.joinToday([e2e], [e2e])[0], 'Heute werde ich weiter daran arbeiten.');
-  assert.equal(api.isComplete(makeRow(api, 'build', { release: '2.0' })), true);
+  assert.equal(api.isComplete(makeRow(api, 'build-start', { release: '2.0' })), true);
+});
+
+test('build continuation compares platform, release and optional story', () => {
+  const api = screenHarness();
+  const previous = makeRow(api, 'build-start', { release: ' R78 ', story: 'XYZ' });
+  const current = makeRow(api, 'build-continue', { release: 'r78', story: ' xyz ' });
+  assert.equal(api.joinToday([current], [previous], true)[0], 'Today I will continue with it.');
+  assert.equal(api.joinToday([current], [previous])[0], 'Heute werde ich damit weitermachen.');
+  for (const changed of [{ platform: 'Web' }, { release: 'R79' }, { story: 'Other story' }, { story: '' }]) {
+    const different = { ...current, values: { ...current.values, ...changed } };
+    assert.equal(api.joinToday([different], [previous])[0], api.sentenceFor(different, 'today'));
+  }
+  const finished = { ...previous, key: 'build-finish' };
+  assert.equal(api.joinToday([current], [finished])[0], api.sentenceFor(current, 'today'));
+  assert.equal(api.joinToday([current], [])[0], api.sentenceFor(current, 'today'));
+  assert.equal(api.joinToday([current], [previous, makeRow(api, 'task', { task: 'Docs' })])[0], api.sentenceFor(current, 'today'));
+});
+
+test('build testing allows no release, no story, or either, in every stage', () => {
+  const api = screenHarness();
+  for (const stage of ['start', 'continue', 'finish']) {
+    for (const values of [{}, { story: 'XYZ' }, { release: 'R78' }, { story: 'XYZ', release: 'R78' }]) {
+      const row = makeRow(api, `build-${stage}`, values);
+      assert.equal(api.isComplete(row), true);
+      const english = api.englishSentenceFor(row, 'today');
+      assert.match(english, new RegExp(`Today I will ${stage} testing`));
+      assert.equal(english.includes('for release'), Boolean(values.release));
+      assert.equal(english.includes('XYZ'), Boolean(values.story));
+      assert.equal(api.sentenceFor(row, 'yesterday', 'Am Donnerstag').startsWith('Am Donnerstag '), true);
+    }
+  }
+  const row = makeRow(api, 'build-continue', { story: 'XYZ', release: '   ' });
+  assert.equal(api.sentenceFor(row, 'today'), 'Heute werde ich die Tests für XYZ im Mobile-Build fortsetzen.');
+  assert.equal(api.englishSentenceFor(row, 'today'), 'Today I will continue testing XYZ in the Mobile build.');
+  const generic = makeRow(api, 'build-continue');
+  assert.equal(api.joinToday([generic], [makeRow(api, 'build-start')], true)[0], 'Today I will continue with it.');
+});
+
+test('story testing needs only a story; release testing stays separate and platform-aware', () => {
+  const api = screenHarness();
+  assert.equal(api.isComplete(makeRow(api, 'story-start', { story: 'XYZ' })), true);
+  assert.equal(api.isComplete(makeRow(api, 'release-start', { release: '' })), false);
+  for (const kind of ['story', 'release']) {
+    const values = { story: 'XYZ', release: 'R78' };
+    const previous = makeRow(api, `${kind}-start`, values);
+    const current = makeRow(api, `${kind}-continue`, { ...values, platform: 'Web' });
+    assert.equal(api.joinToday([current], [previous])[0], api.sentenceFor(current, 'today'));
+  }
+});
+
+test('testing controls preserve entered names, suggestions, and row identity', () => {
+  const api = screenHarness();
+  let tree = api.render();
+  const section = () => find(tree, node => node.type === api.ActivitySection && node.props.title === 'Today');
+  section().props.onAdd(); tree = api.render();
+  find(tree, node => node.type === api.ActivityPicker).props.onSelect(api.ACTIVITIES.find(a => a.key === 'build-start'));
+  tree = api.render();
+  section().props.updateRows(section().props.setRows, 0, { values: { story: 'XYZ', release: 'R78', platform: 'Web' } });
+  tree = api.render();
+  let rendered = api.ActivitySection(section().props);
+  let row = find(rendered, node => node.type === api.ActivityRow);
+  const id = row.props.row.id;
+  row.props.onActivity('build-continue'); tree = api.render();
+  rendered = api.ActivitySection(section().props);
+  row = find(rendered, node => node.type === api.ActivityRow);
+  assert.equal(row.props.row.id, id);
+  assert.equal(row.props.row.values.story, 'XYZ');
+  assert.equal(row.props.row.values.release, 'R78');
+  assert.equal(row.props.row.values.platform, 'Web');
+  assert.ok(row.props.suggestions.stories.includes('XYZ'));
+  const rowTree = api.ActivityRow(row.props);
+  assert.ok(find(rowTree, node => node.type === api.ValueField && node.props.label === 'Release (optional)'));
+  const tags = api.ValueField({ label: 'Release', value: '', onChange: row.props.onValue.bind(null, 'release'), suggestions: ['R78'] });
+  find(tags, node => node.type === 'Pressable').props.onPress(); tree = api.render();
+  assert.equal(section().props.rows[0].values.release, 'R78');
 });
 
 test('screen starts compact, supports multiple tasks, removal, validation and clear', async () => {
@@ -148,4 +225,22 @@ test('saved task suggestions are backward compatible with existing recents', asy
   assert.equal(recents.releases[0], '2.0');
   stored = '{bad json';
   assert.equal((await api.getScrumRecents()).tasks.length, 0);
+});
+
+test('generated English stays separate from editable and shared German', async () => {
+  const api = screenHarness();
+  let tree = api.render();
+  const section = () => find(tree, node => node.type === api.ActivitySection && node.props.title === 'Today');
+  const button = title => find(tree, node => node.type === 'AppButton' && node.props.title === title);
+  section().props.onAdd(); tree = api.render();
+  find(tree, node => node.type === api.ActivityPicker).props.onSelect(api.ACTIVITIES.find(a => a.key === 'build-continue'));
+  tree = api.render();
+  await button('Build update').props.onPress(); tree = api.render();
+  assert.ok(find(tree, node => node.type === 'Text' && node.props.children.includes('Today I will continue testing the Mobile build.')));
+  const german = find(tree, node => node.type === 'TextInput');
+  assert.equal(german.props.value, 'Heute werde ich die Tests des Mobile-Builds fortsetzen.');
+  await button('Share / copy').props.onPress();
+  assert.deepEqual(api.sharedMessages, [german.props.value]);
+  german.props.onChangeText('Edited update'); tree = api.render();
+  assert.equal(find(tree, node => node.type === 'Text' && node.props.children.includes('English translation')), undefined);
 });

@@ -16,23 +16,25 @@ import { getScrumRecents, saveScrumRecents } from '../lib/store';
 import { AppButton } from './Button';
 import { colors, fonts, styles } from './theme';
 
+const TESTING_ACTIVITIES = [
+  { key: 'story', label: 'Story testing', fields: ['platform', 'story'] },
+  { key: 'build', label: 'Build testing', fields: ['platform', 'release', 'story'] },
+  { key: 'release', label: 'Release testing', fields: ['platform', 'release'] },
+];
+const STAGES = ['start', 'continue', 'finish'];
 const ACTIVITIES = [
-  { key: 'story-start', label: 'Start story testing', fields: ['story'] },
-  { key: 'story-continue', label: 'Continue story testing', fields: ['story'] },
-  { key: 'story-finish', label: 'Finish story testing', fields: ['story'] },
+  ...TESTING_ACTIVITIES.flatMap((activity) => STAGES.map((stage) => ({
+    ...activity,
+    key: `${activity.key}-${stage}`,
+  }))),
   { key: 'bugfix', label: 'Verify bug fixes', fields: ['story'] },
   { key: 'e2e-improvements', label: 'Work on E2E improvements', fields: [] },
   { key: 'task', label: 'Work on a task', fields: ['task'] },
-  { key: 'build', label: 'Test a build', fields: ['platform', 'release', 'story'] },
-  { key: 'release-start', label: 'Start release testing', fields: ['release'] },
-  { key: 'release-continue', label: 'Continue release testing', fields: ['release'] },
-  { key: 'release-finish', label: 'Finish release testing', fields: ['release'] },
 ];
 
 const ACTIVITY_GROUPS = [
-  { title: 'Story testing', keys: ['story-start', 'story-continue', 'story-finish', 'bugfix'] },
-  { title: 'Builds & releases', keys: ['build', 'release-start', 'release-continue', 'release-finish'] },
-  { title: 'Other work', keys: ['e2e-improvements', 'task'] },
+  { title: 'Testing', keys: ['story-start', 'build-start', 'release-start'] },
+  { title: 'Other work', keys: ['bugfix', 'e2e-improvements', 'task'] },
 ];
 
 const EMPTY_VALUES = { story: '', release: '', task: '', platform: 'Mobile' };
@@ -65,27 +67,32 @@ function sentenceFor(row, period, pastPrefix = 'Gestern') {
       return yesterday
         ? `${pastPrefix} habe ich an E2E-Verbesserungen gearbeitet.`
         : 'Heute werde ich an E2E-Verbesserungen arbeiten.';
-    case 'build':
-      if (story) {
-        return yesterday
-          ? `${pastPrefix} habe ich ${story} im ${platform} Build für Release ${release} getestet.`
-          : `Heute werde ich ${story} im ${platform} Build für Release ${release} testen.`;
-      }
+    case 'build-start':
+    case 'build-continue':
+    case 'build-finish': {
+      const target = `die Tests ${story.trim() ? `für ${story.trim()} im ${platform}-Build` : `des ${platform}-Builds`}${release.trim() ? ` für Release ${release.trim()}` : ''}`;
+      const stage = row.key.split('-')[1];
+      const verb = stage === 'start'
+        ? (yesterday ? 'begonnen' : 'beginnen')
+        : stage === 'finish'
+          ? (yesterday ? 'abgeschlossen' : 'abschließen')
+          : (yesterday ? 'fortgesetzt' : 'fortsetzen');
       return yesterday
-        ? `${pastPrefix} habe ich den ${platform} Build für Release ${release} getestet.`
-        : `Heute werde ich den ${platform} Build für Release ${release} testen.`;
+        ? `${pastPrefix} habe ich ${target} ${verb}.`
+        : `Heute werde ich ${target} ${verb}.`;
+    }
     case 'release-start':
       return yesterday
-        ? `${pastPrefix} habe ich mit den Tests für Release ${release} begonnen.`
-        : `Heute werde ich mit den Tests für Release ${release} beginnen.`;
+        ? `${pastPrefix} habe ich mit den ${platform}-Release-Tests für ${release} begonnen.`
+        : `Heute werde ich mit den ${platform}-Release-Tests für ${release} beginnen.`;
     case 'release-continue':
       return yesterday
-        ? `${pastPrefix} habe ich mit den Release-Tests für ${release} weitergemacht.`
-        : `Heute werde ich mit den Release-Tests für ${release} weitermachen.`;
+        ? `${pastPrefix} habe ich mit den ${platform}-Release-Tests für ${release} weitergemacht.`
+        : `Heute werde ich mit den ${platform}-Release-Tests für ${release} weitermachen.`;
     case 'release-finish':
       return yesterday
-        ? `${pastPrefix} habe ich die Release-Tests für ${release} abgeschlossen.`
-        : `Heute werde ich die Release-Tests für ${release} abschließen.`;
+        ? `${pastPrefix} habe ich die ${platform}-Release-Tests für ${release} abgeschlossen.`
+        : `Heute werde ich die ${platform}-Release-Tests für ${release} abschließen.`;
     default:
       return '';
   }
@@ -94,14 +101,38 @@ function sentenceFor(row, period, pastPrefix = 'Gestern') {
 function isComplete(row) {
   if (!row.selected) return false;
   return row.fields
-    .filter((field) => field !== 'platform' && !(row.key === 'build' && field === 'story'))
+    .filter((field) => field !== 'platform' && !row.key.startsWith('build-'))
     .every((field) => row.values[field].trim());
 }
 
-function joinPeriod(rows, period, pastPrefix = 'Gestern') {
+function englishSentenceFor(row, period, pastPrefix = 'Gestern') {
+  const { story, release, task, platform } = row.values;
+  const past = period === 'yesterday';
+  const prefix = past
+    ? ({ 'Am Donnerstag': 'On Thursday', 'Am Freitag': 'On Friday' }[pastPrefix] || 'Yesterday')
+    : 'Today';
+  const subject = `${prefix} I${past ? '' : ' will'}`;
+  if (row.key === 'task') return `${subject} ${past ? 'worked' : 'work'} on the task ${task}.`;
+  if (row.key === 'bugfix') return `${subject} ${past ? 'verified' : 'verify'} the bug fixes for ${story}.`;
+  if (row.key === 'e2e-improvements') return `${subject} ${past ? 'worked' : 'work'} on E2E improvements.`;
+  const [kind, stage] = row.key.split('-');
+  const target = kind === 'story'
+    ? `testing ${story}`
+    : kind === 'release'
+      ? `${platform} release testing for ${release}`
+      : `testing ${story.trim() ? `${story.trim()} in the ${platform} build` : `the ${platform} build`}${release.trim() ? ` for release ${release.trim()}` : ''}`;
+  const verb = stage === 'start' ? (past ? 'started' : 'start')
+    : stage === 'finish' ? (past ? 'finished' : 'finish') : (past ? 'continued' : 'continue');
+  return `${subject} ${verb} ${target}.`;
+}
+
+function joinPeriod(rows, period, pastPrefix = 'Gestern', english = false) {
   return rows.filter(isComplete).map((row, index) => {
-    const sentence = sentenceFor(row, period, pastPrefix);
+    const sentence = english ? englishSentenceFor(row, period, pastPrefix) : sentenceFor(row, period, pastPrefix);
     if (index === 0) return sentence;
+    if (english) return period === 'yesterday'
+      ? sentence.replace(/^(Yesterday|On Thursday|On Friday) I /, 'I also ')
+      : sentence.replace(/^Today I will /, 'I will also ');
     return period === 'yesterday'
       ? sentence.replace(`${pastPrefix} habe ich `, 'Außerdem habe ich ')
       : sentence.replace(/^Heute /, 'Außerdem ');
@@ -112,14 +143,17 @@ function sameValue(a, b) {
   return a.trim().toLowerCase() === b.trim().toLowerCase();
 }
 
-function joinToday(rows, yesterdayRows) {
+function joinToday(rows, yesterdayRows, english = false) {
   const completedYesterday = yesterdayRows.filter(isComplete);
-  return rows.filter(isComplete).map((row, index) => {
+  const completedToday = rows.filter(isComplete);
+  const unambiguous = completedYesterday.length === 1 && completedToday.length === 1;
+  return completedToday.map((row, index) => {
     const repeatsStory =
       row.key === 'story-continue' &&
       completedYesterday.some(
         (previous) =>
           ['story-start', 'story-continue'].includes(previous.key) &&
+          sameValue(previous.values.platform, row.values.platform) &&
           sameValue(previous.values.story, row.values.story)
       );
     const repeatsRelease =
@@ -127,13 +161,23 @@ function joinToday(rows, yesterdayRows) {
       completedYesterday.some(
         (previous) =>
           ['release-start', 'release-continue'].includes(previous.key) &&
+          sameValue(previous.values.platform, row.values.platform) &&
           sameValue(previous.values.release, row.values.release)
+      );
+    const repeatsBuild =
+      row.key === 'build-continue' &&
+      completedYesterday.some((previous) =>
+        ['build-start', 'build-continue'].includes(previous.key) &&
+        ['platform', 'release', 'story'].every((field) =>
+          sameValue(previous.values[field], row.values[field])
+        )
       );
     const continuesE2e =
       row.key === 'e2e-improvements' &&
       completedYesterday.some((previous) => previous.key === 'e2e-improvements');
 
-    if (repeatsStory || repeatsRelease || continuesE2e) {
+    if ((unambiguous && (repeatsStory || repeatsRelease || repeatsBuild)) || continuesE2e) {
+      if (english) return `${index === 0 ? 'Today I will' : 'I will also'} ${continuesE2e ? 'continue working on it' : 'continue with it'}.`;
       return index === 0
         ? continuesE2e
           ? 'Heute werde ich weiter daran arbeiten.'
@@ -143,7 +187,8 @@ function joinToday(rows, yesterdayRows) {
           : 'Außerdem werde ich damit weitermachen.';
     }
 
-    const sentence = sentenceFor(row, 'today');
+    const sentence = english ? englishSentenceFor(row, 'today') : sentenceFor(row, 'today');
+    if (english) return index === 0 ? sentence : sentence.replace(/^Today I will /, 'I will also ');
     return index === 0 ? sentence : sentence.replace(/^Heute /, 'Außerdem ');
   });
 }
@@ -155,6 +200,7 @@ export default function ScrumScreen() {
   const [pickerPeriod, setPickerPeriod] = useState(null);
   const nextRowId = useRef(0);
   const [output, setOutput] = useState('');
+  const [englishOutput, setEnglishOutput] = useState('');
   const [error, setError] = useState('');
   const [fridayKurzarbeit, setFridayKurzarbeit] = useState(false);
   const isMonday = new Date().getDay() === 1;
@@ -246,6 +292,11 @@ export default function ScrumScreen() {
     ];
     setError('');
     setOutput(sentences.join(' '));
+    setEnglishOutput([
+      ...(isMonday && fridayKurzarbeit ? ['On Friday I was on short-time work.'] : []),
+      ...joinPeriod(yesterday, 'yesterday', pastPrefix, true),
+      ...joinToday(today, yesterday, true),
+    ].join(' '));
     try {
       setRecents(await saveScrumRecents(liveValues));
     } catch {
@@ -350,9 +401,18 @@ export default function ScrumScreen() {
           <TextInput
             style={[styles.input, styles.multiline, { backgroundColor: colors.bg }]}
             value={output}
-            onChangeText={setOutput}
+            onChangeText={(value) => {
+              setOutput(value);
+              setEnglishOutput('');
+            }}
             multiline
           />
+          {englishOutput ? (
+            <View style={{ marginTop: 12 }}>
+              <Text style={styles.sectionLabel}>English translation</Text>
+              <Text style={styles.body}>{englishOutput}</Text>
+            </View>
+          ) : null}
           <AppButton
             title="Share / copy"
             icon="share-2"
@@ -393,6 +453,7 @@ function ActivitySection({ title, icon, rows, setRows, updateRows, recents, live
           row={row}
           onRemove={() => onRemove(index)}
           onValue={(field, value) => updateRows(setRows, index, { values: { [field]: value } })}
+          onActivity={(key) => updateRows(setRows, index, ACTIVITIES.find((activity) => activity.key === key))}
           suggestions={{
             stories: [...liveValues.stories, ...recents.stories],
             releases: [...liveValues.releases, ...recents.releases],
@@ -405,7 +466,9 @@ function ActivitySection({ title, icon, rows, setRows, updateRows, recents, live
   );
 }
 
-function ActivityRow({ row, onRemove, onValue, suggestions }) {
+function ActivityRow({ row, onRemove, onValue, onActivity, suggestions }) {
+  const testing = row.fields.includes('platform');
+  const [kind, stage] = row.key.split('-');
   return (
     <View
       style={[
@@ -469,6 +532,8 @@ function ActivityRow({ row, onRemove, onValue, suggestions }) {
                   <Pressable
                     key={platform}
                     onPress={() => onValue('platform', platform)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: active }}
                     style={[styles.segment, active && styles.segmentActive]}
                   >
                     <Text style={active ? styles.segmentTextActive : styles.segmentText}>
@@ -479,9 +544,32 @@ function ActivityRow({ row, onRemove, onValue, suggestions }) {
               })}
             </View>
           ) : null}
+          {testing ? (
+            <>
+              <Text style={styles.label}>Stage</Text>
+              <View style={styles.segmentWrap}>
+                {STAGES.map((value) => {
+                  const active = stage === value;
+                  return (
+                    <Pressable
+                      key={value}
+                      onPress={() => onActivity(`${kind}-${value}`)}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: active }}
+                      style={[styles.segment, { minHeight: 44, justifyContent: 'center' }, active && styles.segmentActive]}
+                    >
+                      <Text style={active ? styles.segmentTextActive : styles.segmentText}>
+                        {value.charAt(0).toUpperCase() + value.slice(1)}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </>
+          ) : null}
           {row.fields.includes('story') ? (
             <ValueField
-              label={row.key === 'build' ? 'Story name (optional)' : 'Story name'}
+              label={kind === 'build' ? 'Story name (optional)' : 'Story name'}
               value={row.values.story}
               onChange={(value) => onValue('story', value)}
               suggestions={suggestions.stories}
@@ -489,7 +577,7 @@ function ActivityRow({ row, onRemove, onValue, suggestions }) {
           ) : null}
           {row.fields.includes('release') ? (
             <ValueField
-              label="Release"
+              label={kind === 'build' ? 'Release (optional)' : 'Release'}
               value={row.values.release}
               onChange={(value) => onValue('release', value)}
               suggestions={suggestions.releases}
