@@ -22,6 +22,7 @@ import {
 } from '../lib/store';
 import { AppButton } from './Button';
 import { styles, colors, fonts } from './theme';
+import appVersion from '../version.json';
 
 export default function SettingsScreen() {
   const [provider, setProviderState] = useState(AI_PROVIDERS.CLAUDE);
@@ -190,6 +191,27 @@ export default function SettingsScreen() {
           <Text style={styles.errorText}>{error}</Text>
         </View>
       ) : null}
+
+      <View
+        style={{
+          borderTopWidth: 1,
+          borderTopColor: colors.border,
+          marginTop: 26,
+          paddingTop: 18,
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          accessibilityLabel={`App version ${appVersion.version}`}
+          style={{
+            color: colors.faint,
+            fontFamily: fonts.body,
+            fontSize: 13,
+          }}
+        >
+          Version {appVersion.version}
+        </Text>
+      </View>
     </ScrollView>
   );
 }

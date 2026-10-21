@@ -11,3 +11,11 @@ Read the exact versioned docs at https://docs.expo.dev/versions/v54.0.0/ before 
 - Before proposing changes, check the existing app for behavior or controls that already solve the need, such as suggestion tags for reusing story and release names. Reuse them instead of adding duplicate functionality.
 - During planning and discussion, do not independently introduce additional changes into a plan or prototype. If you believe a change beyond the agreed scope would help, explain the reason and ask the user before including or implementing it.
 - Approval of a prototype or plan covers only the changes discussed and agreed with the user; it does not authorize broader redesigns or new features.
+
+# App versioning
+
+- `version.json` is the single source of truth for the user-visible app version. This is the app's own version system; do not use Expo Update IDs or Expo configuration as its source.
+- Every branch push containing an app change must increment the version first. Use `npm run version:patch` for fixes and routine updates, `npm run version:minor` for new backward-compatible features, or `npm run version:major` for breaking changes.
+- Mention the resulting version (for example, `v1.0.1`) in the commit message and in any branch push/PR summary so the deployed update can be matched to the version shown on Settings.
+- Never edit `version.json` by hand. The increment commands validate and update it consistently.
+- Run `npm test` after incrementing or changing the versioning system.
