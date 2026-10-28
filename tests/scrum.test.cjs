@@ -63,7 +63,7 @@ function screenHarness() {
     '../lib/store': { getScrumRecents: async () => ({}), saveScrumRecents: async (v) => v },
     './Button': { AppButton: 'AppButton' },
     './theme': { colors: {}, fonts: {}, styles: {} },
-  }, '\nexports.testApi = { ACTIVITIES, EMPTY_VALUES, sentenceFor, englishSentenceFor, joinToday, joinPeriod, isComplete, ActivitySection, ActivityPicker, ActivityRow, ValueField };');
+  }, '\nexports.testApi = { ACTIVITIES, EMPTY_VALUES, sentenceFor, englishSentenceFor, joinToday, joinPeriod, isComplete, activityAvailable, ActivitySection, ActivityPicker, ActivityRow, ValueField };');
   return {
     ...api.testApi,
     sharedMessages,
@@ -158,6 +158,54 @@ test('story testing needs only a story; release testing stays separate and platf
   }
 });
 
+test('new activities build German and English from only the supplied context', () => {
+  const api = screenHarness();
+  const story = makeRow(api, 'story-test', { story: 'Rake task', release: '' });
+  assert.equal(api.sentenceFor(story, 'yesterday'), 'Gestern habe ich die Tests für Rake task begonnen.');
+  assert.equal(api.englishSentenceFor(story, 'yesterday'), 'Yesterday I started testing Rake task.');
+  assert.equal(api.sentenceFor({ ...story, values: { ...story.values, release: 'R84' } }, 'yesterday'), 'Gestern habe ich die Tests für Rake task für Release R84 begonnen.');
+  for (const key of ['topics-look', 'topics-test', 'bugfix']) {
+    const empty = makeRow(api, key, { platform: '', story: '', release: '' });
+    assert.equal(api.isComplete(empty), false);
+    for (const context of [{ platform: 'Web' }, { story: 'Rake task' }, { release: 'R84' }, { latestBuild: true }]) {
+      const row = { ...empty, values: { ...empty.values, ...context } };
+      assert.equal(api.isComplete(row), true);
+      assert.ok(api.sentenceFor(row, 'today').endsWith('.'));
+    }
+  }
+  const latest = makeRow(api, 'topics-look', { platform: 'Mobile', latestBuild: true });
+  assert.equal(api.sentenceFor(latest, 'today'), 'Heute werde ich mir die Themen im neuesten Mobile-Build anschauen.');
+  assert.equal(api.englishSentenceFor(latest, 'today'), 'Today I will look into topics in the latest Mobile build.');
+  const continuing = makeRow(api, 'topics-test', { platform: '', release: 'R84' });
+  assert.equal(api.joinToday([continuing], [])[0], 'Heute werde ich die Themen für Release R84 weiter testen.');
+  assert.equal(api.isComplete(makeRow(api, 'e2e-improvements')), true);
+  const staged = makeRow(api, 'story-continue', { story: 'Rake task', release: 'R84' });
+  assert.match(api.sentenceFor(staged, 'today'), /Rake task für Release R84/);
+  assert.equal(api.joinToday([staged], [makeRow(api, 'story-start', { story: 'Rake task', release: 'R85' })])[0], api.sentenceFor(staged, 'today'));
+});
+
+test('story or task stages retain input and produce the right tense', () => {
+  const api = screenHarness();
+  for (const [stage, past, future] of [['start', 'begonnen', 'beginnen'], ['continue', 'fortgesetzt', 'fortsetzen'], ['finish', 'abgeschlossen', 'abschließen']]) {
+    const row = makeRow(api, 'story-test', { story: 'Rake task', release: 'R84', testStage: stage });
+    assert.ok(api.sentenceFor(row, 'yesterday').endsWith(`${past}.`));
+    assert.ok(api.sentenceFor(row, 'today').endsWith(`${future}.`));
+    assert.match(api.sentenceFor(row, 'today'), /Rake task für Release R84/);
+  }
+  const previous = makeRow(api, 'story-test', { story: 'Rake task', release: 'R84' });
+  const current = makeRow(api, 'story-test', { story: 'Rake task', release: 'R84', testStage: 'continue' });
+  assert.equal(api.joinToday([current], [previous])[0], 'Heute werde ich damit weitermachen.');
+  assert.equal(api.joinToday([current], [])[0], api.sentenceFor(current, 'today'));
+  assert.equal(api.activityAvailable('topics-test', 'yesterday'), false);
+  assert.equal(api.activityAvailable('topics-test', 'today'), true);
+  const changes = [];
+  const ui = api.ActivityRow({ row: previous, period: 'yesterday', onValue: (field, value) => changes.push([field, value]), onRemove() {}, suggestions: { stories: [], releases: [], tasks: [] } });
+  const continueButton = find(ui, node => node.type === 'Pressable' && node.props.children.some(child => child?.type === 'Text' && child.props.children.includes('Continue')));
+  continueButton.props.onPress();
+  assert.deepEqual(changes, [['testStage', 'continue']]);
+  assert.equal(find(ui, node => node.type === 'Pressable' && node.props.accessibilityLabel === 'Change activity'), undefined);
+});
+
 test('testing controls preserve entered names, suggestions, and row identity', () => {
   const api = screenHarness();
   let tree = api.render();
@@ -196,7 +244,7 @@ test('screen starts compact, supports multiple tasks, removal, validation and cl
   assert.equal(picker().props.period, 'today');
   picker().props.onSelect(api.ACTIVITIES.find((a) => a.key === 'task')); tree = api.render();
   await button('Build update').props.onPress(); tree = api.render();
-  assert.ok(find(tree, (node) => node.type === 'Text' && node.props.children.includes('Add the required task, story or release names.')));
+  assert.ok(find(tree, (node) => node.type === 'Text' && node.props.children.includes('Add the required name or context for each activity.')));
   section().props.updateRows(section().props.setRows, 0, { values: { task: 'E2E test documentation' } }); tree = api.render();
   section().props.onAdd(); tree = api.render();
   picker().props.onSelect(api.ACTIVITIES.find((a) => a.key === 'task')); tree = api.render();
