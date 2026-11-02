@@ -126,6 +126,28 @@ test('build continuation compares platform, release and optional story', () => {
   assert.equal(api.joinToday([current], [previous, makeRow(api, 'task', { task: 'Docs' })])[0], api.sentenceFor(current, 'today'));
 });
 
+test('start and continue map to finish only for the same unambiguous testing activity', () => {
+  const api = screenHarness();
+  for (const kind of ['story', 'build', 'release', 'story-test']) {
+    const values = { platform: 'Mobile', story: 'Checkout', release: 'R78' };
+    const finish = kind === 'story-test'
+      ? makeRow(api, kind, { ...values, testStage: 'finish' })
+      : makeRow(api, `${kind}-finish`, values);
+    for (const stage of ['start', 'continue']) {
+      const previous = kind === 'story-test'
+        ? makeRow(api, kind, { ...values, testStage: stage })
+        : makeRow(api, `${kind}-${stage}`, values);
+      assert.equal(api.joinToday([finish], [previous])[0], 'Heute werde ich es abschließen.');
+      assert.equal(api.joinToday([finish], [previous], true)[0], 'Today I will finish it.');
+      const different = { ...finish, values: { ...finish.values, release: 'R79' } };
+      assert.equal(api.joinToday([different], [previous])[0], api.sentenceFor(different, 'today'));
+      assert.equal(api.joinToday([finish], [previous, makeRow(api, 'task', { task: 'Docs' })])[0], api.sentenceFor(finish, 'today'));
+      assert.equal(api.joinToday([finish, makeRow(api, 'task', { task: 'Docs' })], [previous])[0], api.sentenceFor(finish, 'today'));
+    }
+    assert.equal(api.joinToday([finish], [finish])[0], api.sentenceFor(finish, 'today'));
+  }
+});
+
 test('build testing allows no release, no story, or either, in every stage', () => {
   const api = screenHarness();
   for (const stage of ['start', 'continue', 'finish']) {
