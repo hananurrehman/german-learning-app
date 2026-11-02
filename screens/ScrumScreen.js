@@ -200,8 +200,9 @@ function joinToday(rows, yesterdayRows, english = false) {
   const completedToday = rows.filter(isComplete);
   const unambiguous = completedYesterday.length === 1 && completedToday.length === 1;
   return completedToday.map((row, index) => {
+    const finishing = row.key === 'story-test' ? row.values.testStage === 'finish' : /^(story|build|release)-finish$/.test(row.key);
     const repeatsStory =
-      row.key === 'story-continue' &&
+      ['story-continue', 'story-finish'].includes(row.key) &&
       completedYesterday.some(
         (previous) =>
           ['story-start', 'story-continue'].includes(previous.key) &&
@@ -209,12 +210,12 @@ function joinToday(rows, yesterdayRows, english = false) {
           sameValue(previous.values.story, row.values.story) &&
           sameValue(previous.values.release, row.values.release)
       );
-    const repeatsStoryTask = row.key === 'story-test' && row.values.testStage === 'continue' && completedYesterday.some((previous) =>
+    const repeatsStoryTask = row.key === 'story-test' && ['continue', 'finish'].includes(row.values.testStage) && completedYesterday.some((previous) =>
       previous.key === 'story-test' && ['start', 'continue'].includes(previous.values.testStage) &&
       sameValue(previous.values.story, row.values.story) && sameValue(previous.values.release, row.values.release)
     );
     const repeatsRelease =
-      row.key === 'release-continue' &&
+      ['release-continue', 'release-finish'].includes(row.key) &&
       completedYesterday.some(
         (previous) =>
           ['release-start', 'release-continue'].includes(previous.key) &&
@@ -222,7 +223,7 @@ function joinToday(rows, yesterdayRows, english = false) {
           sameValue(previous.values.release, row.values.release)
       );
     const repeatsBuild =
-      row.key === 'build-continue' &&
+      ['build-continue', 'build-finish'].includes(row.key) &&
       completedYesterday.some((previous) =>
         ['build-start', 'build-continue'].includes(previous.key) &&
         ['platform', 'release', 'story'].every((field) =>
@@ -234,6 +235,7 @@ function joinToday(rows, yesterdayRows, english = false) {
       completedYesterday.some((previous) => previous.key === 'e2e-improvements');
 
     if ((unambiguous && (repeatsStory || repeatsStoryTask || repeatsRelease || repeatsBuild)) || continuesE2e) {
+      if (finishing) return english ? 'Today I will finish it.' : 'Heute werde ich es abschließen.';
       if (english) return `${index === 0 ? 'Today I will' : 'I will also'} ${continuesE2e ? 'continue working on it' : 'continue with it'}.`;
       return index === 0
         ? continuesE2e
