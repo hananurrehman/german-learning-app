@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { checkSentence } from '../lib/ai';
-import { saveWord } from '../lib/store';
+import { getWriteContext, saveWord, saveWriteContext } from '../lib/store';
 import { AppButton, SaveChip } from './Button';
 import { styles, colors, fonts } from './theme';
 
@@ -54,12 +54,22 @@ function RiseIn({ index, children }) {
 
 export default function WriteScreen() {
   const [text, setText] = useState('');
+  const [context, setContext] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
   const [saved, setSaved] = useState(false);
   const [savedNouns, setSavedNouns] = useState({}); // de -> true
   const savedScale = useRef(new Animated.Value(1)).current;
+  const contextEdited = useRef(false);
+
+  useEffect(() => {
+    let active = true;
+    getWriteContext().then((value) => {
+      if (active && !contextEdited.current) setContext(value);
+    }).catch(() => {});
+    return () => { active = false; };
+  }, []);
 
   async function onCheck() {
     if (loading || !text.trim()) return;
@@ -69,7 +79,8 @@ export default function WriteScreen() {
     setSaved(false);
     setSavedNouns({});
     try {
-      setResult(await checkSentence(text.trim()));
+      await saveWriteContext(context.trim());
+      setResult(await checkSentence(text.trim(), context.trim()));
     } catch (e) {
       setError(e.message || String(e));
     } finally {
@@ -109,11 +120,24 @@ export default function WriteScreen() {
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
     >
+      <Text style={styles.label}>Context (optional)</Text>
+      <TextInput
+        style={styles.input}
+        value={context}
+        onChangeText={(value) => { contextEdited.current = true; setContext(value); }}
+        placeholder="e.g. Message to my landlord"
+        placeholderTextColor={colors.faint}
+        accessibilityLabel="Context, optional"
+      />
+      <Text style={[styles.body, { color: colors.muted, fontSize: 13, marginTop: 4, marginBottom: 18 }]}>
+        Last context is remembered
+      </Text>
+      <Text style={styles.label}>Your German text</Text>
       <TextInput
         style={[styles.input, styles.multiline]}
         value={text}
         onChangeText={setText}
-        placeholder="Write what you want to say in standup…"
+        placeholder="Write your text in German…"
         placeholderTextColor={colors.faint}
         multiline
       />
@@ -186,9 +210,9 @@ export default function WriteScreen() {
             </View>
           </RiseIn>
 
-          {/* 3. Natural standup version */}
+          {/* 3. Natural version */}
           <RiseIn index={2}>
-            <Block label="Natural standup version">{result.natural}</Block>
+            <Block label="Natural version">{result.natural}</Block>
           </RiseIn>
 
           {/* 4. Pattern + examples */}
